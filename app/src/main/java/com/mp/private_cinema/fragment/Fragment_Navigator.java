@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.mp.pc_library.viewpager_indicator.CirclePageIndicator;
 import com.mp.private_cinema.R;
-import com.mp.private_cinema.base.BaseFragment_NoData;
+import com.mp.private_cinema.base.BaseFragment;
 import com.mp.private_cinema.utils.Constants;
 import com.mp.private_cinema.utils.SPUtils;
 
@@ -24,7 +24,7 @@ import butterknife.BindView;
  * 说明
  */
 
-public class Fragment_Navigator extends BaseFragment_NoData {
+public class Fragment_Navigator extends BaseFragment {
 
     ArrayList<View> views = new ArrayList<View>();
 
@@ -53,7 +53,7 @@ public class Fragment_Navigator extends BaseFragment_NoData {
         (views.get(2).findViewById(R.id.textView)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                start(Fragment_Logo.newInstance());
+                replaceFragment(Fragment_Logo.newInstance(), false);
                 SPUtils.put(getContext(), Constants.FLAG_NAVIGATOR, false);
             }
         });

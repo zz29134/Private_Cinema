@@ -22,7 +22,7 @@ public class SPUtils {
      * @param value
      */
     public static void put(Context context, String key, Object value) {
-        SharedPreferences sp = context.getSharedPreferences(Constants.SharedPreferences_Name, Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sp.edit();
         if (value instanceof String) {
             edit.putString(key, (String) value);
@@ -47,7 +47,7 @@ public class SPUtils {
      * @return
      */
     private static Object get(Context context, String key, Object defValue) {
-        SharedPreferences sp = context.getSharedPreferences(Constants.SharedPreferences_Name, Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         if (defValue instanceof String) {
             return sp.getString(key, (String) defValue);
         } else if (defValue instanceof Integer) {
@@ -124,7 +124,7 @@ public class SPUtils {
      * @return
      */
     public static Map<String, ?> getAll(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(Constants.SharedPreferences_Name, Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         return sp.getAll();
     }
 
@@ -135,7 +135,7 @@ public class SPUtils {
      * @param key
      */
     public static void remove(Context context, String key) {
-        SharedPreferences sp = context.getSharedPreferences(Constants.SharedPreferences_Name, Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sp.edit();
         edit.remove(key);
         SharedPreferencesCompat.EditorCompat.getInstance().apply(edit);
@@ -147,7 +147,7 @@ public class SPUtils {
      * @param context
      */
     public static void clear(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(Constants.SharedPreferences_Name, Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sp.edit();
         edit.clear();
         SharedPreferencesCompat.EditorCompat.getInstance().apply(edit);

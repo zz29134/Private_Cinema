@@ -1,6 +1,7 @@
 package com.mp.private_cinema.net;
 
 
+import com.mp.pc_library.utils.Base64;
 import com.mp.private_cinema.utils.Constants;
 
 import java.security.Key;
@@ -12,9 +13,7 @@ import javax.crypto.spec.IvParameterSpec;
 
 /**
  * 3DES加密工具类
- * 
- * @author liufeng
- * @date 2012-10-11
+ *
  */
 public class Des3 {
 	// 密钥

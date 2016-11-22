@@ -3,7 +3,7 @@ package com.mp.private_cinema.fragment;
 import android.os.Bundle;
 
 import com.mp.private_cinema.R;
-import com.mp.private_cinema.base.BaseFragment_LoadData;
+import com.mp.private_cinema.base.BaseFragment;
 
 /**
  * 创建人 Zhangzhe
@@ -11,7 +11,9 @@ import com.mp.private_cinema.base.BaseFragment_LoadData;
  * 说明   .
  */
 
-public class Fragment_Logo extends BaseFragment_LoadData {
+public class Fragment_Logo extends BaseFragment {
+
+    private static final int LOAD_ADVERTISMENT = 0x00F;
 
     public static Fragment_Logo newInstance() {
         Bundle args = new Bundle();
@@ -21,17 +23,12 @@ public class Fragment_Logo extends BaseFragment_LoadData {
     }
 
     @Override
-    protected int getContentID() {
-        return R.layout.logo_fragment;
-    }
-
-    @Override
-    protected void lazyLoadData() {
-
-    }
-
-    @Override
     protected void onCreateView(Bundle savedInstanceState) {
 
+    }
+
+    @Override
+    protected int getContentID() {
+        return R.layout.logo_fragment;
     }
 }

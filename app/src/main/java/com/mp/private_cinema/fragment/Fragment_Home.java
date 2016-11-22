@@ -3,7 +3,7 @@ package com.mp.private_cinema.fragment;
 import android.os.Bundle;
 
 import com.mp.private_cinema.R;
-import com.mp.private_cinema.base.BaseFragment_LoadData;
+import com.mp.private_cinema.base.BaseFragment;
 
 /**
  * 创建人 Zhangzhe
@@ -11,7 +11,7 @@ import com.mp.private_cinema.base.BaseFragment_LoadData;
  * 用途   .
  */
 
-public class Fragment_Home extends BaseFragment_LoadData {
+public class Fragment_Home extends BaseFragment {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -28,11 +28,6 @@ public class Fragment_Home extends BaseFragment_LoadData {
     @Override
     protected int getContentID() {
         return R.layout.home_fragment;
-    }
-
-    @Override
-    protected void lazyLoadData() {
-
     }
 
 }

@@ -5,11 +5,12 @@ import android.support.annotation.Nullable;
 
 import com.mp.private_cinema.R;
 import com.mp.private_cinema.base.BaseActivity;
-import com.mp.private_cinema.base.BaseFragment;
 import com.mp.private_cinema.fragment.Fragment_Logo;
 import com.mp.private_cinema.fragment.Fragment_Navigator;
 import com.mp.private_cinema.utils.Constants;
 import com.mp.private_cinema.utils.SPUtils;
+
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * 创建人 Zhangzhe
@@ -25,18 +26,23 @@ public class Activity_Index extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    protected SupportFragment getRootFragment() {
         if (SPUtils.getBoolean(this, Constants.FLAG_NAVIGATOR, true)) {
-            loadFragment(Fragment_Navigator.newInstance());
+            return Fragment_Navigator.newInstance();
         } else {
-            loadFragment(Fragment_Logo.newInstance());
+            return Fragment_Logo.newInstance();
         }
     }
 
-    private void loadFragment(BaseFragment fragment) {
-        loadRootFragment(R.id.index_activity, fragment);
+    @Override
+    protected int getFragmentContentLayoutID() {
+        return R.id.index_activity;
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
 }

@@ -3,16 +3,26 @@ package com.mp.private_cinema.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.mp.pc_library.utils.DateUtils;
 import com.mp.private_cinema.R;
 import com.mp.private_cinema.activity.Activity_Main;
 import com.mp.private_cinema.base.BaseFragment;
+import com.mp.private_cinema.bean.Advertisement_Index;
 import com.mp.private_cinema.utils.Constants;
+import com.orhanobut.logger.Logger;
 import com.yolanda.nohttp.rest.Response;
 import com.yolanda.nohttp.rest.SimpleResponseListener;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,9 +35,8 @@ import butterknife.OnClick;
 
 public class Fragment_Logo extends BaseFragment {
 
-    private static final int LOAD_ADVERTISEMENT = 0x00F;
-
     private int SECOND_COUNTDOWN = 5;
+    private Advertisement_Index ad;
 
     @BindView(R.id.textView)
     TextView textView;
@@ -53,8 +62,7 @@ public class Fragment_Logo extends BaseFragment {
                 textView.setText("跳过 " + SECOND_COUNTDOWN);
                 handler_countdown.postDelayed(runnable_countdown, 1000);
             } else {
-                startActivity(new Intent(_mActivity, Activity_Main.class));
-                _mActivity.finish();
+                goToMainActivity();
             }
         }
     };
@@ -66,7 +74,25 @@ public class Fragment_Logo extends BaseFragment {
     private Runnable runnable_logo = new Runnable() {
         @Override
         public void run() {
+            if (null != ad && TextUtils.isEmpty(ad.getAdvertisement_ImagePath())
+                    && TextUtils.isEmpty(ad.getAdvertisement_ID())
+                    && DateUtils.getInstance().millis() - DateUtils.getInstance().millisOfDate(ad.getAdvertisement_DeadLine()) < 0) {
+                Glide.with(mContext).load(ad.getAdvertisement_ImagePath()).listener(new RequestListener<String, GlideDrawable>() {
 
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+                }).into(imageView);
+                handler_countdown.postDelayed(runnable_countdown, 0);
+            } else {
+                goToMainActivity();
+            }
         }
     };
 
@@ -84,14 +110,22 @@ public class Fragment_Logo extends BaseFragment {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
+        addGetRequest(Constants.CMD.WELCOME, Constants.REQUEST_FLAG.LOAD_ADVERTISEMENT, null, new SimpleResponseListener<String>() {
+            @Override
+            public void onStart(int what) {
+//                handler_logo.postDelayed(runnable_logo, 3000);
+            }
 
-        addGetRequest(Constants.CMD.WELCOME, LOAD_ADVERTISEMENT, null, new SimpleResponseListener<String>() {
             @Override
             public void onSucceed(int what, Response<String> response) {
-//                Glide.with(_mActivity).load(response.get()).into(imageView);
+                Logger.e(response.get());
+//                ad = mGson.fromJson(response.get(), Advertisement_Index.class);
             }
         });
-//        Glide.with(_mActivity).load("http://img1.mydrivers.com/img/20140604/cc9403330d6245e590f16427586f09da.jpg").into(imageView);
-//        handler_countdown.postDelayed(runnable_countdown, 3000);
+    }
+
+    private void goToMainActivity() {
+        startActivity(new Intent(_mActivity, Activity_Main.class));
+        _mActivity.finish();
     }
 }

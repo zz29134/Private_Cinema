@@ -1,11 +1,13 @@
 package com.mp.private_cinema.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.mp.private_cinema.net.NoHttpUtils;
 import com.mp.private_cinema.utils.Constants;
 import com.yolanda.nohttp.download.DownloadListener;
@@ -27,6 +29,14 @@ public abstract class BaseFragment extends SupportFragment {
      * ButterKnife绑定/解绑器
      */
     private Unbinder unbinder;
+    protected Context mContext;
+    protected Gson mGson;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mContext = getContext();
+    }
 
     @Nullable
     @Override
@@ -39,6 +49,7 @@ public abstract class BaseFragment extends SupportFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mGson = new Gson();
         onCreateView(savedInstanceState);
     }
 
@@ -96,6 +107,30 @@ public abstract class BaseFragment extends SupportFragment {
      */
     protected void addUpLoadFileRequest(String cmd, int what, Map<String, String> forMap, Map<String, String> fileMap, OnResponseListener<String> listener) {
         NoHttpUtils.getInstance().asyncUpLoadFile(Constants.URLHead + cmd, what, forMap, fileMap, listener);
+    }
+
+    /**
+     * 取消一般请求
+     * @param what
+     */
+    protected void cancelRequest(int what) {
+        NoHttpUtils.getInstance().cancelRequestBySign(what);
+    }
+
+    /**
+     * 取消下载请求
+     * @param what
+     */
+    protected void cancelDownLoad(int what) {
+        NoHttpUtils.getInstance().cancelDownLoadBySign(what);
+    }
+
+    /**
+     * 取消一般请求
+     * @param what
+     */
+    protected void cancelUpLoad(int what) {
+        NoHttpUtils.getInstance().cancelUpLoadBySign(what);
     }
 
     protected abstract int getContentID();

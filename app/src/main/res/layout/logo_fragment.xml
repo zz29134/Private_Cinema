@@ -23,4 +23,13 @@
         android:background="@drawable/logo_countdown_stroke"
         android:visibility="gone"/>
 
+    <TextView
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textColor="@color/ameber50"
+        android:layout_alignParentRight="true"
+        android:layout_margin="30dp"/>
+
 </RelativeLayout>

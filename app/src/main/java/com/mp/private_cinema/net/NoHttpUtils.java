@@ -260,4 +260,34 @@ public class NoHttpUtils {
 
     }
 
+    /**
+     * 取消一般请求
+     * @param what
+     */
+    public void cancelRequestBySign(int what) {
+        if (null != mRequestQueue) {
+            mRequestQueue.cancelBySign(what);
+        }
+    }
+
+    /**
+     * 取消下载请求
+     * @param what
+     */
+    public void cancelDownLoadBySign(int what) {
+        if (null != mDownloadQueue) {
+            mDownloadQueue.cancelBySign(what);
+        }
+    }
+
+    /**
+     * 取消上传请求
+     * @param what
+     */
+    public void cancelUpLoadBySign(int what) {
+        if (null != mRequestQueue) {
+            mRequestQueue.cancelBySign(what);
+        }
+    }
+
 }

@@ -31,11 +31,15 @@ public class Constants {
     /**
      * URL头部
      */
-    public static final String URLHead = "http://api.nohttp.net/";
+    public static final String URLHead = "http://61.52.199.191:8888/APP/";
 
     /** 请求远程数据时的固定字段 */
     interface reqhead {
 
+    }
+
+    public interface REQUEST_FLAG {
+        Integer LOAD_ADVERTISEMENT = 0x0000F;
     }
 
     public interface CMD {

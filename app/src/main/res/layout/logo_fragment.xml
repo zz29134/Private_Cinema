@@ -2,6 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ameber300">
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/index_background"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:text="  跳过  "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/ameber50"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        android:padding="5dp"
+        android:background="@drawable/logo_countdown_stroke"
+        android:visibility="gone"/>
 
 </RelativeLayout>

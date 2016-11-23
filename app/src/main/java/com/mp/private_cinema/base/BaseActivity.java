@@ -42,5 +42,4 @@ public abstract class BaseActivity extends SupportActivity {
      * 获取当前Activity中要放置Fragment的控件ID
      */
     protected abstract int getFragmentContentLayoutID();
-
 }

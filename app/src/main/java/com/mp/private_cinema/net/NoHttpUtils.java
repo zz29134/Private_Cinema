@@ -1,4 +1,4 @@
-package com.mp.private_cinema.utils;
+package com.mp.private_cinema.net;
 
 import android.os.Environment;
 

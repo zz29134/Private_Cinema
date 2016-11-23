@@ -31,14 +31,14 @@ public class Constants {
     /**
      * URL头部
      */
-    public static final String URLHead = "http://api.nohttp.net";
+    public static final String URLHead = "http://api.nohttp.net/";
 
     /** 请求远程数据时的固定字段 */
     interface reqhead {
 
     }
 
-    interface cmd {
+    public interface CMD {
         String WELCOME = "welcome";
         String HOME_ADVERTISEMENT = "home_advertisement";
         String HOME_FILMLIST = "home_film";

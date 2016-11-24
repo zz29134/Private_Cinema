@@ -29,6 +29,5 @@ public class Activity_Main extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 }

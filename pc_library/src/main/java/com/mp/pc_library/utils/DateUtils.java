@@ -269,17 +269,17 @@ public class DateUtils {
      *
      * @return
      */
-    public static long millis() {
+    public long millis() {
         return System.currentTimeMillis();
     }
 
     /**
      * 获得指定时间的毫秒数
-     *
+     * （日期格式"yyyy-MM-dd"）
      * @return str 指定的日期
      */
-    public static long millisOfDate(String str) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    public long millisOfDate(String str) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE);
         try {
             return sdf.parse(str).getTime();
         } catch (ParseException e) {

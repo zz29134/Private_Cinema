@@ -6,6 +6,8 @@ import com.yanzhenjie.nohttp.OkHttpNetworkExecutor;
 import com.yolanda.nohttp.Logger;
 import com.yolanda.nohttp.NoHttp;
 
+import org.litepal.LitePal;
+
 /**
  * Created by Zhangzhe on 2016/11/15.
  */
@@ -30,5 +32,6 @@ public class PC_Application extends Application {
                 .setNetworkExecutor(new OkHttpNetworkExecutor())  // 使用OkHttp做网络层。
         );
         Logger.setDebug(true); // 开启NoHttp调试模式。
+        LitePal.initialize(this);
     }
 }

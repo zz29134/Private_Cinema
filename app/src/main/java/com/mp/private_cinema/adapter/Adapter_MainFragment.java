@@ -25,7 +25,7 @@ public class Adapter_MainFragment extends FragmentStatePagerAdapter implements I
     private ArrayList<BaseFragment> mFragments = new ArrayList<>();
     private static final String[] titles = new String[]{"首页", "影片", "院线", "我的"};
     private static final int[] ICONS = new int[] {
-            R.drawable.logo_indicator_icon,
+            R.drawable.home_indicator_icon,
             R.drawable.cinema_indicator_icon,
             R.drawable.film_indicator_icon,
             R.drawable.mine_indicator_icon,

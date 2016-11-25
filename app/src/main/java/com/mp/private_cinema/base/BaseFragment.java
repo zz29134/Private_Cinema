@@ -8,10 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
+import com.mp.private_cinema.event.StartBrotherEvent;
+import com.mp.private_cinema.event.StartParentEvent;
 import com.mp.private_cinema.net.NoHttpUtils;
 import com.mp.private_cinema.utils.Constants;
 import com.yolanda.nohttp.download.DownloadListener;
 import com.yolanda.nohttp.rest.OnResponseListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Map;
 
@@ -32,31 +37,46 @@ public abstract class BaseFragment extends SupportFragment {
     protected Context mContext;
     protected Gson mGson;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mContext = getContext();
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getContentID(), container, false);
+        mContext = getContext();
+        mGson = new Gson();
         unbinder = ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mGson = new Gson();
         onCreateView(savedInstanceState);
+    }
+
+    /**
+     * 打开一个同级的Fragment
+     */
+    @Subscribe
+    public void startBrother(StartBrotherEvent event) {
+        start(event.targetFragment);
+    }
+
+    /**
+     * 打开一个ParentFragment级别的Fragment
+     * @param event
+     */
+    public void startParent(StartParentEvent event) {
+        if (getParentFragment() instanceof BaseFragment) {
+            ((BaseFragment) getParentFragment()).start(event.targetFragment);
+        }
     }
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
     }
 
     /**

@@ -26,7 +26,7 @@ import butterknife.BindView;
 
 public class Fragment_Navigator extends BaseFragment {
 
-    ArrayList<View> views = new ArrayList<View>();
+    ArrayList<View> views = new ArrayList<>();
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;

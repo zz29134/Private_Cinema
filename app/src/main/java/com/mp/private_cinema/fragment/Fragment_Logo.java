@@ -72,7 +72,7 @@ public class Fragment_Logo extends BaseFragment {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
-        addGetRequest(Constants.CMD.WELCOME, Constants.REQUEST_FLAG.LOAD_ADVERTISEMENT, null, new SimpleResponseListener<String>() {
+        addGetRequest(Constants.CMD.WELCOME, Constants.REQUEST_FLAG.LOGO_ADVERTISEMENT, null, new SimpleResponseListener<String>() {
             @Override
             public void onStart(int what) {
                 ad = new Bean_Advertisement_Index();
@@ -126,7 +126,7 @@ public class Fragment_Logo extends BaseFragment {
                     getAdvertisementImage();
                 }
             } else {
-                cancelRequest(Constants.REQUEST_FLAG.LOAD_ADVERTISEMENT);
+                cancelRequest(Constants.REQUEST_FLAG.LOGO_ADVERTISEMENT);
                 goToMainActivity();
             }
         }
@@ -141,6 +141,7 @@ public class Fragment_Logo extends BaseFragment {
 
             @Override
             public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                handler_ImageLoad.removeCallbacks(runnable_ImageLoad);
                 ad.setADVERTISEMENT_IMAGE(ImageUtils.getInstance().Drawable2Bytes(resource));
                 ad.save();
                 handler_countdown.post(runnable_countdown);

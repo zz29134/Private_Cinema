@@ -39,7 +39,8 @@ public class Constants {
     }
 
     public interface REQUEST_FLAG {
-        int LOAD_ADVERTISEMENT = 0x00F;
+        int LOGO_ADVERTISEMENT = 0x00F;
+        int HOME_ADVERTISEMENT_TOP = 0x01F;
     }
 
     public interface CMD {

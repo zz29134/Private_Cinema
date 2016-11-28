@@ -1,5 +1,7 @@
 package com.mp.private_cinema.utils;
 
+import static com.mp.pc_library.utils.LibConstants.SHARED_PREFERENCE_NAME;
+
 /**
  * 创建人 Zhangzhe
  * 日期   2016/11/18
@@ -7,31 +9,6 @@ package com.mp.private_cinema.utils;
  */
 
 public class Constants {
-
-    /**
-     * SP文件名
-     */
-    public static final String SHARED_PREFERENCE_NAME = "SharedPreferences_PC";
-
-    /**
-     * 首次进入APP标志
-     */
-    public static final String FLAG_NAVIGATOR = "true";
-
-    /**
-     * 加密KEY
-     */
-    public static final String SECRET_KEY = "com.mobile.privatecinema";
-
-    /**
-     * 加密向量
-     */
-    public static final String SECRET_IV = "01234567";
-
-    /**
-     * URL头部
-     */
-    public static final String URLHead = "http://61.52.199.191:8888/APP/";
 
     /** 请求远程数据时的固定字段 */
     interface reqhead {
@@ -47,25 +24,6 @@ public class Constants {
         String WELCOME = "welcome";
         String HOME_ADVERTISEMENT = "home_advertisement";
         String HOME_FILMLIST = "home_film";
-    }
-
-    interface netstate {
-        String readfail = "网络读取失败!";
-    }
-
-    interface jsName {
-        String code = "Code";
-        String content = "Content";
-        String state = "State";
-        String code_success = "001";
-        String code_error = "002";
-        String code_none = "003";
-        String code_timeout = "004";
-        /** 总页数 */
-        String pagetotal = "pagetotal";
-        /** 总记录数 */
-        String totlePageSize = "totlePageSize";
-
     }
 
     interface keywords {
@@ -96,11 +54,5 @@ public class Constants {
         /** 登录状态 **/
         String AlreadyLogin = SHARED_PREFERENCE_NAME + "_alreadyLogin";
     }
-
-    interface TrueOrFalse {
-        String True = "true";
-        String False = "false";
-    }
-
 
 }

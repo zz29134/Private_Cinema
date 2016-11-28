@@ -1,4 +1,4 @@
-package com.mp.private_cinema.event;
+package com.mp.pc_library.lib_event;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -7,11 +7,10 @@ import me.yokeyword.fragmentation.SupportFragment;
  * 日期   2016/11/25
  * 说明
  */
-
-public class StartParentEvent {
+public class StartBrotherEvent {
     public SupportFragment targetFragment;
 
-    public StartParentEvent(SupportFragment targetFragment) {
+    public StartBrotherEvent(SupportFragment targetFragment) {
         this.targetFragment = targetFragment;
     }
 }

@@ -4,14 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
+import com.mp.pc_library.app.AppManager;
+import com.mp.pc_library.utils.SPUtils;
 import com.mp.private_cinema.R;
-import com.mp.private_cinema.base.BaseActivity;
+import com.mp.pc_library.base.BaseActivity;
 import com.mp.private_cinema.fragment.Fragment_Logo;
 import com.mp.private_cinema.fragment.Fragment_Navigator;
-import com.mp.private_cinema.utils.Constants;
-import com.mp.private_cinema.utils.SPUtils;
 
 import me.yokeyword.fragmentation.SupportFragment;
+
+import static com.mp.pc_library.utils.LibConstants.FLAG_NAVIGATOR;
 
 /**
  * 创建人 Zhangzhe
@@ -28,7 +30,7 @@ public class Activity_Index extends BaseActivity {
 
     @Override
     protected SupportFragment getRootFragment() {
-        if (SPUtils.getBoolean(this, Constants.FLAG_NAVIGATOR, true)) {
+        if (SPUtils.getBoolean(this, FLAG_NAVIGATOR, true)) {
             return Fragment_Navigator.newInstance();
         } else {
             return Fragment_Logo.newInstance();
@@ -54,4 +56,9 @@ public class Activity_Index extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManager.getInstance().killActivity(this);
+    }
 }

@@ -19,7 +19,7 @@ import android.content.Context;
 import android.support.annotation.StringRes;
 import android.view.View;
 
-public class Toast {
+public class ToastUtils {
 
     public static void show(Context context, CharSequence msg) {
         android.widget.Toast.makeText(context, msg, android.widget.Toast.LENGTH_LONG).show();

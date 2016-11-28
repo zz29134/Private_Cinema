@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import com.mp.pc_library.viewpager_indicator.TabPageIndicator;
 import com.mp.private_cinema.R;
 import com.mp.private_cinema.adapter.Adapter_MainFragment;
-import com.mp.private_cinema.base.BaseFragment;
+import com.mp.pc_library.base.BaseFragment;
 
 import butterknife.BindView;
 

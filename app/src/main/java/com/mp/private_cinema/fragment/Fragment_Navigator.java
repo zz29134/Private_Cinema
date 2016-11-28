@@ -8,15 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mp.pc_library.utils.SPUtils;
 import com.mp.pc_library.viewpager_indicator.CirclePageIndicator;
 import com.mp.private_cinema.R;
-import com.mp.private_cinema.base.BaseFragment;
-import com.mp.private_cinema.utils.Constants;
-import com.mp.private_cinema.utils.SPUtils;
+import com.mp.pc_library.base.BaseFragment;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+
+import static com.mp.pc_library.utils.LibConstants.FLAG_NAVIGATOR;
 
 /**
  * 创建人 Zhangzhe
@@ -54,7 +55,7 @@ public class Fragment_Navigator extends BaseFragment {
             @Override
             public void onClick(View view) {
                 replaceFragment(Fragment_Logo.newInstance(), false);
-                SPUtils.put(getContext(), Constants.FLAG_NAVIGATOR, false);
+                SPUtils.put(getContext(), FLAG_NAVIGATOR, false);
             }
         });
 

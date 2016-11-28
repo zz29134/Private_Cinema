@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.mp.pc_library.viewpager_indicator.IconPagerAdapter;
 import com.mp.private_cinema.R;
-import com.mp.private_cinema.base.BaseFragment;
+import com.mp.pc_library.base.BaseFragment;
 import com.mp.private_cinema.fragment.Fragment_Cinema;
 import com.mp.private_cinema.fragment.Fragment_Film;
 import com.mp.private_cinema.fragment.Fragment_Home;

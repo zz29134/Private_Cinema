@@ -2,4 +2,7 @@
     <string name="app_name">PC</string>
 
     <string name="hint_search">搜索</string>
+    <string name="hit_film">热映影片</string>
+    <string name="more">更多</string>
+
 </resources>

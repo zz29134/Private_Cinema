@@ -16,11 +16,9 @@ import com.mp.pc_library.utils.DateUtils;
 import com.mp.pc_library.utils.ImageUtils;
 import com.mp.private_cinema.R;
 import com.mp.private_cinema.activity.Activity_Main;
-import com.mp.private_cinema.base.BaseFragment;
+import com.mp.pc_library.base.BaseFragment;
 import com.mp.private_cinema.bean.Bean_Advertisement_Index;
 import com.mp.private_cinema.utils.Constants;
-import com.yolanda.nohttp.rest.Response;
-import com.yolanda.nohttp.rest.SimpleResponseListener;
 
 import org.litepal.crud.DataSupport;
 
@@ -72,18 +70,19 @@ public class Fragment_Logo extends BaseFragment {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
-        addGetRequest(Constants.CMD.WELCOME, Constants.REQUEST_FLAG.LOGO_ADVERTISEMENT, null, new SimpleResponseListener<String>() {
-            @Override
-            public void onStart(int what) {
-                ad = new Bean_Advertisement_Index();
-                handler_logo.postDelayed(runnable_logo, 3000);
-            }
-
-            @Override
-            public void onSucceed(int what, Response<String> response) {
-                ad = mGson.fromJson(response.get(), Bean_Advertisement_Index.class);
-            }
-        });
+        goToMainActivity();
+//        addGetRequest(Constants.CMD.WELCOME, Constants.REQUEST_FLAG.LOGO_ADVERTISEMENT, null, new SimpleResponseListener<String>() {
+//            @Override
+//            public void onStart(int what) {
+//                ad = new Bean_Advertisement_Index();
+//                handler_logo.postDelayed(runnable_logo, 3000);
+//            }
+//
+//            @Override
+//            public void onSucceed(int what, Response<String> response) {
+//                ad = mGson.fromJson(response.get(), Bean_Advertisement_Index.class);
+//            }
+//        });
     }
 
     /**

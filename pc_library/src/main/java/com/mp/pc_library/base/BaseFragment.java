@@ -1,4 +1,4 @@
-package com.mp.private_cinema.base;
+package com.mp.pc_library.base;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
-import com.mp.private_cinema.event.StartBrotherEvent;
-import com.mp.private_cinema.event.StartParentEvent;
-import com.mp.private_cinema.net.NoHttpUtils;
-import com.mp.private_cinema.utils.Constants;
+import com.mp.pc_library.lib_event.StartBrotherEvent;
+import com.mp.pc_library.lib_event.StartParentEvent;
+import com.mp.pc_library.utils.NoHttpUtils;
 import com.yolanda.nohttp.download.DownloadListener;
 import com.yolanda.nohttp.rest.OnResponseListener;
 
@@ -23,6 +22,8 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
+
+import static com.mp.pc_library.utils.LibConstants.URLHead;
 
 /**
  * Created by Zhangzhe on 2016/11/16.
@@ -88,7 +89,7 @@ public abstract class BaseFragment extends SupportFragment {
      * @param listener 返回监听
      */
     protected void addGetRequest(String cmd, int what, Map<String, String> map, OnResponseListener<String> listener) {
-        NoHttpUtils.getInstance().asyncGetStringRequest(Constants.URLHead + cmd, what, map, listener);
+        NoHttpUtils.getInstance().asyncGetStringRequest(URLHead + cmd, what, map, listener);
     }
 
     /**
@@ -100,7 +101,7 @@ public abstract class BaseFragment extends SupportFragment {
      * @param listener 返回监听
      */
     protected void addPostRequest(String cmd, int what, Map<String, String> map, OnResponseListener<String> listener) {
-        NoHttpUtils.getInstance().asyncPostStringRequest(Constants.URLHead + cmd, what, map, listener);
+        NoHttpUtils.getInstance().asyncPostStringRequest(URLHead + cmd, what, map, listener);
     }
 
     /**
@@ -113,7 +114,7 @@ public abstract class BaseFragment extends SupportFragment {
      * @param listener 下载监听
      */
     protected void addDownLoadFileRequest(String cmd, int what, Map<String, String> map, String filePath, DownloadListener listener) {
-        NoHttpUtils.getInstance().asyncDownLoadFileRequest(Constants.URLHead + cmd, what, map, filePath, listener);
+        NoHttpUtils.getInstance().asyncDownLoadFileRequest(URLHead + cmd, what, map, filePath, listener);
     }
 
     /**
@@ -126,7 +127,7 @@ public abstract class BaseFragment extends SupportFragment {
      * @param listener 网络请求监听
      */
     protected void addUpLoadFileRequest(String cmd, int what, Map<String, String> forMap, Map<String, String> fileMap, OnResponseListener<String> listener) {
-        NoHttpUtils.getInstance().asyncUpLoadFile(Constants.URLHead + cmd, what, forMap, fileMap, listener);
+        NoHttpUtils.getInstance().asyncUpLoadFile(URLHead + cmd, what, forMap, fileMap, listener);
     }
 
     /**

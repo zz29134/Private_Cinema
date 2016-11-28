@@ -3,7 +3,7 @@ package com.mp.private_cinema.fragment;
 import android.os.Bundle;
 
 import com.mp.private_cinema.R;
-import com.mp.private_cinema.base.BaseFragment;
+import com.mp.pc_library.base.BaseFragment;
 
 /**
  * 创建人 Zhangzhe

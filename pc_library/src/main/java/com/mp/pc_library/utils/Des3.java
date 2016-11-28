@@ -1,8 +1,5 @@
-package com.mp.private_cinema.net;
+package com.mp.pc_library.utils;
 
-
-import com.mp.pc_library.utils.Base64;
-import com.mp.private_cinema.utils.Constants;
 
 import java.security.Key;
 
@@ -11,15 +8,18 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
+import static com.mp.pc_library.utils.LibConstants.SECRET_IV;
+import static com.mp.pc_library.utils.LibConstants.SECRET_KEY;
+
 /**
  * 3DES加密工具类
  *
  */
 public class Des3 {
 	// 密钥
-	private final static String secretKey = Constants.SECRET_KEY;
+	private final static String secretKey = SECRET_KEY;
 	// 向量
-	private final static String secretIv = Constants.SECRET_IV;
+	private final static String secretIv = SECRET_IV;
 	// 加解密统一使用的编码方式
 	private final static String encoding = "utf-8";
 

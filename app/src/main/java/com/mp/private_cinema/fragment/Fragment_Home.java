@@ -7,14 +7,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mp.pc_library.viewpager_indicator.CirclePageIndicator;
 import com.mp.private_cinema.R;
 import com.mp.private_cinema.adapter.Adapter_ViewPager_ImageView;
-import com.mp.private_cinema.base.BaseFragment;
-import com.mp.private_cinema.event.StartParentEvent;
+import com.mp.pc_library.base.BaseFragment;
+import com.mp.pc_library.lib_event.StartParentEvent;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -37,10 +38,16 @@ public class Fragment_Home extends BaseFragment {
     TextView homeSearch;
     @BindView(R.id.home_search_icon)
     ImageView homeSearchIcon;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
-    @BindView(R.id.indicator)
-    CirclePageIndicator indicator;
+    @BindView(R.id.home_top_viewPager)
+    ViewPager home_top_viewPager;
+    @BindView(R.id.home_top_indicator)
+    CirclePageIndicator home_top_indicator;
+    @BindView(R.id.more_film)
+    LinearLayout moreFilm;
+    @BindView(R.id.hit_film_viewPager)
+    ViewPager hitFilmViewPager;
+    @BindView(R.id.hit_film_indicator)
+    CirclePageIndicator hitFilmIndicator;
 
     @OnClick(R.id.home_search)
     public void onClick() {
@@ -56,10 +63,10 @@ public class Fragment_Home extends BaseFragment {
             switch (msg.what) {
                 case UPTATE_ADVERTISEMENT_TOP:
                     if (msg.arg1 != 0) {
-                        viewPager.setCurrentItem(msg.arg1);
+                        home_top_viewPager.setCurrentItem(msg.arg1);
                     } else {
                         //false 当从末页调到首页是，不显示翻页动画效果，
-                        viewPager.setCurrentItem(msg.arg1, false);
+                        home_top_viewPager.setCurrentItem(msg.arg1, false);
                     }
                     break;
             }
@@ -81,8 +88,12 @@ public class Fragment_Home extends BaseFragment {
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         initAdvertisement();
+        initHitFilms();
     }
 
+    /**
+     * 加载首页最上方广告
+     */
     private void initAdvertisement() {
 //        addGetRequest(Constants.CMD.HOME_ADVERTISEMENT, Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP, null, new SimpleResponseListener<String>() {
 //            @Override
@@ -118,29 +129,44 @@ public class Fragment_Home extends BaseFragment {
         for (String temp : imagePaths) {
             ImageView imageView = new ImageView(mContext);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            Glide.with(mContext).load(temp).into(imageView);
+            Glide.with(mContext).load(temp).crossFade().centerCrop().into(imageView);
             imageViewList.add(imageView);
         }
-        viewPager.setAdapter(new Adapter_ViewPager_ImageView(imageViewList));
-        indicator.setFillColor(ContextCompat.getColor(getContext(), R.color.ameber400));
-        indicator.setPageColor(ContextCompat.getColor(getContext(), R.color.cyan700));
-        indicator.setRadius(15.0F);
-        indicator.setViewPager(viewPager);
+        home_top_viewPager.setAdapter(new Adapter_ViewPager_ImageView(imageViewList));
+        home_top_indicator.setRadius(13.0F);
+        home_top_indicator.setPageColor(ContextCompat.getColor(getContext(), R.color.cyan700));
+        home_top_indicator.setFillColor(ContextCompat.getColor(getContext(), R.color.ameber400));
+        home_top_indicator.setStrokeColor(ContextCompat.getColor(getContext(), R.color.blueGrey600));
+        home_top_indicator.setStrokeWidth(1.0F);
+        home_top_indicator.setViewPager(home_top_viewPager);
 
         // 自动轮播代码
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 Message message = new Message();
                 message.what = UPTATE_ADVERTISEMENT_TOP;
-                if (viewPager.getCurrentItem() == imageViewList.size() - 1) {
+                if (home_top_viewPager.getCurrentItem() == imageViewList.size() - 1) {
                     message.arg1 = 0;
                 } else {
-                    message.arg1 =  viewPager.getCurrentItem() + 1;
+                    message.arg1 = home_top_viewPager.getCurrentItem() + 1;
                 }
                 mHandler.sendMessage(message);
             }
         }, 5000, 5000);
     }
 
+    private void initHitFilms() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (null != timer) {
+            timer.cancel();
+            timer = null;
+        }
+    }
 }

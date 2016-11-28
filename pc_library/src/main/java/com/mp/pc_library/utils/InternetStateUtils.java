@@ -16,7 +16,7 @@ import java.util.List;
  * 说明
  */
 
-public class NetWorkUtils {
+public class InternetStateUtils {
 
     /**
      * 网络是否可用

@@ -18,6 +18,7 @@ public class Constants {
     public interface REQUEST_FLAG {
         int LOGO_ADVERTISEMENT = 0x00F;
         int HOME_ADVERTISEMENT_TOP = 0x01F;
+        int HOME_HITFILMS = 0x02F;
     }
 
     public interface CMD {

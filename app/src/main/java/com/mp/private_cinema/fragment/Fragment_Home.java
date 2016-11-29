@@ -5,19 +5,29 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.mp.pc_library.viewpager_indicator.CirclePageIndicator;
-import com.mp.private_cinema.R;
-import com.mp.private_cinema.adapter.Adapter_ViewPager_ImageView;
 import com.mp.pc_library.base.BaseFragment;
 import com.mp.pc_library.lib_event.StartParentEvent;
+import com.mp.pc_library.utils.ToastUtils;
+import com.mp.pc_library.viewpager_indicator.CirclePageIndicator;
+import com.mp.private_cinema.R;
+import com.mp.private_cinema.adapter.Adapter_Home_HitFilms;
+import com.mp.private_cinema.adapter.Adapter_ViewPager_ImageView;
+import com.mp.private_cinema.bean.Bean_Home_HitFilms;
+import com.mp.private_cinema.utils.Constants;
+import com.yolanda.nohttp.rest.Response;
+import com.yolanda.nohttp.rest.SimpleResponseListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -44,10 +54,8 @@ public class Fragment_Home extends BaseFragment {
     CirclePageIndicator home_top_indicator;
     @BindView(R.id.more_film)
     LinearLayout moreFilm;
-    @BindView(R.id.hit_film_viewPager)
-    ViewPager hitFilmViewPager;
-    @BindView(R.id.hit_film_indicator)
-    CirclePageIndicator hitFilmIndicator;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
     @OnClick(R.id.home_search)
     public void onClick() {
@@ -89,35 +97,15 @@ public class Fragment_Home extends BaseFragment {
     protected void onCreateView(Bundle savedInstanceState) {
         initAdvertisement();
         initHitFilms();
+//        addGetRequest(Constants.CMD.HOME_ADVERTISEMENT, Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP, null, responseListener);
+//        addGetRequest(Constants.CMD.HOME_FILMLIST, Constants.REQUEST_FLAG.HOME_HITFILMS, null, responseListener);
+
     }
 
     /**
      * 加载首页最上方广告
      */
     private void initAdvertisement() {
-//        addGetRequest(Constants.CMD.HOME_ADVERTISEMENT, Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP, null, new SimpleResponseListener<String>() {
-//            @Override
-//            public void onStart(int what) {
-//                super.onStart(what);
-//            }
-//
-//            @Override
-//            public void onSucceed(int what, Response<String> response) {
-//                super.onSucceed(what, response);
-//            }
-//
-//            @Override
-//            public void onFailed(int what, Response<String> response) {
-//                super.onFailed(what, response);
-//            }
-//
-//            @Override
-//            public void onFinish(int what) {
-//                /**
-//                 * 实现viewPager自动轮播
-//                 */
-//            }
-//        });
 
         String[] imagePaths = {
                 "http://www.microfotos.com/pic/1/121/12199/1219932preview4.jpg",
@@ -158,8 +146,77 @@ public class Fragment_Home extends BaseFragment {
     }
 
     private void initHitFilms() {
+        List<Bean_Home_HitFilms> hitFilmsList = new ArrayList<>();
+        hitFilmsList.add(new Bean_Home_HitFilms("电影1", "http://img2.imgtn.bdimg.com/it/u=1681751274,1729335524&fm=21&gp=0.jpg", "9.0"));
+        hitFilmsList.add(new Bean_Home_HitFilms("电影2", "http://d15.lxyes.com/15xm/prev/20151211/9/99862808.jpg", "8.0"));
+        hitFilmsList.add(new Bean_Home_HitFilms("电影3", "http://img1.gamedog.cn/2012/03/06/20-120306142Z8.jpg", "7.0"));
+        hitFilmsList.add(new Bean_Home_HitFilms("电影4", "http://img1.gamedog.cn/2012/03/06/20-120306142Z6.jpg", "6.0"));
+        hitFilmsList.add(new Bean_Home_HitFilms("电影5", "http://img2.imgtn.bdimg.com/it/u=1681751274,1729335524&fm=21&gp=0.jpg", "5.0"));
+        hitFilmsList.add(new Bean_Home_HitFilms("电影6", "http://d15.lxyes.com/15xm/prev/20151211/9/99862808.jpg", "4.0"));
+        hitFilmsList.add(new Bean_Home_HitFilms("电影7", "http://img1.gamedog.cn/2012/03/06/20-120306142Z8.jpg", "3.0"));
+        hitFilmsList.add(new Bean_Home_HitFilms("电影8", "http://img1.gamedog.cn/2012/03/06/20-120306142Z6.jpg", "2.0"));
+
+        Adapter_Home_HitFilms adapter_home_hitFilms = new Adapter_Home_HitFilms(mContext, hitFilmsList);
+        adapter_home_hitFilms.setOnItemClickListener(new Adapter_Home_HitFilms.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, Bean_Home_HitFilms hitFilms) {
+                ToastUtils.show(mContext, hitFilms.getFilm_Name());
+            }
+        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(adapter_home_hitFilms);
 
     }
+
+    private SimpleResponseListener responseListener = new SimpleResponseListener() {
+        @Override
+        public void onStart(int what) {
+            switch (what) {
+                case Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP:
+
+                case Constants.REQUEST_FLAG.HOME_HITFILMS:
+
+                default:
+                    break;
+            }
+        }
+
+        @Override
+        public void onSucceed(int what, Response response) {
+            switch (what) {
+                case Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP:
+                    initAdvertisement();
+                case Constants.REQUEST_FLAG.HOME_HITFILMS:
+                    initHitFilms();
+                default:
+                    break;
+            }
+        }
+
+        @Override
+        public void onFailed(int what, Response response) {
+            switch (what) {
+                case Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP:
+
+                case Constants.REQUEST_FLAG.HOME_HITFILMS:
+
+                default:
+                    break;
+            }
+        }
+
+        @Override
+        public void onFinish(int what) {
+            switch (what) {
+                case Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP:
+
+                case Constants.REQUEST_FLAG.HOME_HITFILMS:
+
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onDestroy() {

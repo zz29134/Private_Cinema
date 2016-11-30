@@ -31,7 +31,7 @@ public class LibConstants {
     /**
      * URL头部
      */
-    public static final String URLHead = "http://61.52.199.191:8888/APP/";
+    public static final String URLHead = "http://61.52.195.141:8888/APP/";
 
     interface netstate {
         String readfail = "网络读取失败!";

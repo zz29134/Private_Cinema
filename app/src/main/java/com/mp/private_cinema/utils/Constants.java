@@ -26,7 +26,7 @@ public class Constants {
         String WELCOME = "welcome";
         String HOME_ADVERTISEMENT = "home_advertisement";
         String HOME_FILMLIST = "home_film";
-        String HOME_CINEMALIST = "home_cinema";
+        String HOME_CINEMALIST = "home_store";
     }
 
     interface keywords {

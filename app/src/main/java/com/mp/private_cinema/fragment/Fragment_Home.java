@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.mp.pc_library.base.BaseFragment;
 import com.mp.pc_library.lib_event.StartParentEvent;
 import com.mp.pc_library.utils.ToastUtils;
@@ -21,6 +23,7 @@ import com.mp.pc_library.viewpager_indicator.CirclePageIndicator;
 import com.mp.private_cinema.R;
 import com.mp.private_cinema.adapter.Adapter_Home_HitFilms;
 import com.mp.private_cinema.adapter.Adapter_ViewPager_ImageView;
+import com.mp.private_cinema.bean.Bean_Home_HitCinemas;
 import com.mp.private_cinema.bean.Bean_Home_HitFilms;
 import com.mp.private_cinema.utils.Constants;
 import com.yolanda.nohttp.rest.Response;
@@ -32,6 +35,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -54,8 +58,12 @@ public class Fragment_Home extends BaseFragment {
     CirclePageIndicator home_top_indicator;
     @BindView(R.id.more_film)
     LinearLayout moreFilm;
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    @BindView(R.id.hitFilm_RecyclerView)
+    RecyclerView hitFilm_RecyclerView;
+    @BindView(R.id.more_cinema)
+    LinearLayout moreCinema;
+    @BindView(R.id.home_scroll)
+    LinearLayout homeScroll;
 
     @OnClick(R.id.home_search)
     public void onClick() {
@@ -73,7 +81,6 @@ public class Fragment_Home extends BaseFragment {
                     if (msg.arg1 != 0) {
                         home_top_viewPager.setCurrentItem(msg.arg1);
                     } else {
-                        //false 当从末页调到首页是，不显示翻页动画效果，
                         home_top_viewPager.setCurrentItem(msg.arg1, false);
                     }
                     break;
@@ -97,8 +104,10 @@ public class Fragment_Home extends BaseFragment {
     protected void onCreateView(Bundle savedInstanceState) {
         initAdvertisement();
         initHitFilms();
+        initHitCinemas();
 //        addGetRequest(Constants.CMD.HOME_ADVERTISEMENT, Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP, null, responseListener);
 //        addGetRequest(Constants.CMD.HOME_FILMLIST, Constants.REQUEST_FLAG.HOME_HITFILMS, null, responseListener);
+//        addGetRequest(Constants.CMD.HOME_CINEMALIST, Constants.REQUEST_FLAG.HOME_HITCINEMAS, null, responseListener);
 
     }
 
@@ -163,9 +172,42 @@ public class Fragment_Home extends BaseFragment {
                 ToastUtils.show(mContext, hitFilms.getFilm_Name());
             }
         });
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(adapter_home_hitFilms);
+        hitFilm_RecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        hitFilm_RecyclerView.setAdapter(adapter_home_hitFilms);
 
+    }
+
+    private void initHitCinemas() {
+        List<Bean_Home_HitCinemas> hitCinemasList = new ArrayList<>();
+        hitCinemasList.add(new Bean_Home_HitCinemas("院线1", "郑州市金水区CBD商务内环路111号", "http://img.bimg.126.net/photo/MXtJM3vL6Ch6LXEaaii0NQ==/5406008402705430190.jpg", "宽敞舒适", "4.0"));
+        hitCinemasList.add(new Bean_Home_HitCinemas("院线2", "郑州市金水区CBD商务内环路222号", "http://img.bimg.126.net/photo/mRweK7G2KmwFhC_I654I9w==/5406008402705430205.jpg", "装修别致", "5.0"));
+        hitCinemasList.add(new Bean_Home_HitCinemas("院线3", "郑州市金水区CBD商务内环路333号", "http://img.bimg.126.net/photo/7tJTFGCjCppRvAZ9p9xFxg==/5406008402705430204.jpg", "老板人好", "6.0"));
+        hitCinemasList.add(new Bean_Home_HitCinemas("院线4", "郑州市金水区CBD商务内环路444号", "http://img.bimg.126.net/photo/s4n4R9mJ0YmAK6_t1XWIeQ==/5406008402705430189.jpg", "音效好", "7.0"));
+        hitCinemasList.add(new Bean_Home_HitCinemas("院线5", "郑州市金水区CBD商务内环路555号", "http://hiphotos.baidu.com/wisegame/pic/item/01d9f2d3572c11dfeb790e61632762d0f603c2cc.jpg", "3D效果好", "8.0"));
+
+        for (final Bean_Home_HitCinemas bean : hitCinemasList) {
+            View item_HitCinema = LayoutInflater.from(mContext).inflate(R.layout.home_item_hitcinemas, null);
+            ImageView cinema_post = ButterKnife.findById(item_HitCinema, R.id.hitCinema_ImageView);
+            TextView cinema_name = ButterKnife.findById(item_HitCinema, R.id.hitCinema_Name);
+            TextView cinema_address = ButterKnife.findById(item_HitCinema, R.id.hitCinema_Address);
+            TextView cinema_feature = ButterKnife.findById(item_HitCinema, R.id.hitCinema_Feature);
+            SimpleRatingBar cinema_rating = ButterKnife.findById(item_HitCinema, R.id.rb_cinemaRating);
+            Glide.with(mContext).load(bean.getCinema_Post()).into(cinema_post);
+            cinema_name.setText(bean.getCinema_Name());
+            cinema_address.setText(bean.getCinema_Address());
+            cinema_feature.setText(bean.getCinema_Feature());
+            cinema_rating.setRating(Float.parseFloat(bean.getCinema_Rating()) / 2);
+            item_HitCinema.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ToastUtils.show(mContext, bean.getCinema_Name());
+                }
+            });
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            layoutParams.setMargins(15, 15, 15, 15);
+            item_HitCinema.setLayoutParams(layoutParams);
+            homeScroll.addView(item_HitCinema);
+        }
     }
 
     private SimpleResponseListener responseListener = new SimpleResponseListener() {
@@ -175,6 +217,8 @@ public class Fragment_Home extends BaseFragment {
                 case Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP:
 
                 case Constants.REQUEST_FLAG.HOME_HITFILMS:
+
+                case Constants.REQUEST_FLAG.HOME_HITCINEMAS:
 
                 default:
                     break;
@@ -188,6 +232,8 @@ public class Fragment_Home extends BaseFragment {
                     initAdvertisement();
                 case Constants.REQUEST_FLAG.HOME_HITFILMS:
                     initHitFilms();
+                case Constants.REQUEST_FLAG.HOME_HITCINEMAS:
+                    initHitCinemas();
                 default:
                     break;
             }
@@ -200,6 +246,8 @@ public class Fragment_Home extends BaseFragment {
 
                 case Constants.REQUEST_FLAG.HOME_HITFILMS:
 
+                case Constants.REQUEST_FLAG.HOME_HITCINEMAS:
+
                 default:
                     break;
             }
@@ -211,6 +259,8 @@ public class Fragment_Home extends BaseFragment {
                 case Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP:
 
                 case Constants.REQUEST_FLAG.HOME_HITFILMS:
+
+                case Constants.REQUEST_FLAG.HOME_HITCINEMAS:
 
                 default:
                     break;

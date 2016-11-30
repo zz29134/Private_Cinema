@@ -3,6 +3,7 @@
 
     <string name="hint_search">搜索</string>
     <string name="hit_film">热映影片</string>
+    <string name="hit_cinema">推荐院线</string>
     <string name="more">更多</string>
 
 </resources>

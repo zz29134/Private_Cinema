@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.mp.private_cinema.R;
 import com.mp.private_cinema.bean.Bean_Home_HitFilms;
 
@@ -74,7 +74,7 @@ public class Adapter_Home_HitFilms extends RecyclerView.Adapter<Adapter_Home_Hit
         @BindView(R.id.tv_filmName)
         TextView tvFilmName;
         @BindView(R.id.rb_filmRating)
-        RatingBar rbFilmRating;
+        SimpleRatingBar rbFilmRating;
         @BindView(R.id.tv_filmScore)
         TextView tvFilmScore;
 

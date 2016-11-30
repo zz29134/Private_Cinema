@@ -19,12 +19,14 @@ public class Constants {
         int LOGO_ADVERTISEMENT = 0x00F;
         int HOME_ADVERTISEMENT_TOP = 0x01F;
         int HOME_HITFILMS = 0x02F;
+        int HOME_HITCINEMAS = 0x03F;
     }
 
     public interface CMD {
         String WELCOME = "welcome";
         String HOME_ADVERTISEMENT = "home_advertisement";
         String HOME_FILMLIST = "home_film";
+        String HOME_CINEMALIST = "home_cinema";
     }
 
     interface keywords {

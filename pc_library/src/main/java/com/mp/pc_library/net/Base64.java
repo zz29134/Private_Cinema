@@ -1,4 +1,4 @@
-package com.mp.pc_library.utils;
+package com.mp.pc_library.net;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

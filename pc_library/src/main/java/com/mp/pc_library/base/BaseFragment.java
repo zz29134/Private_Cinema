@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.mp.pc_library.lib_event.StartBrotherEvent;
 import com.mp.pc_library.lib_event.StartParentEvent;
-import com.mp.pc_library.utils.NoHttpUtils;
+import com.mp.pc_library.net.NoHttpUtils;
 import com.yolanda.nohttp.download.DownloadListener;
 import com.yolanda.nohttp.rest.OnResponseListener;
 

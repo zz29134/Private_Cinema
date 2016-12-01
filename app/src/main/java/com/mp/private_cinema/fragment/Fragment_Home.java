@@ -15,18 +15,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.reflect.TypeToken;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.mp.pc_library.base.BaseFragment;
 import com.mp.pc_library.lib_event.StartParentEvent;
-import com.mp.pc_library.utils.GsonUtil;
 import com.mp.pc_library.utils.ToastUtils;
 import com.mp.pc_library.viewpager_indicator.CirclePageIndicator;
 import com.mp.private_cinema.R;
 import com.mp.private_cinema.adapter.Adapter_Home_HitFilms;
 import com.mp.private_cinema.adapter.Adapter_ViewPager_ImageView;
-import com.mp.private_cinema.bean.Bean_Advertisement_Index;
-import com.mp.private_cinema.bean.Bean_Home_Advertisement;
 import com.mp.private_cinema.bean.Bean_Home_HitCinemas;
 import com.mp.private_cinema.bean.Bean_Home_HitFilms;
 import com.mp.private_cinema.utils.Constants;
@@ -111,8 +107,8 @@ public class Fragment_Home extends BaseFragment {
 //        initHitFilms();
 //        initHitCinemas();
         addGetRequest(Constants.CMD.HOME_ADVERTISEMENT, Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP, null, responseListener);
-        addGetRequest(Constants.CMD.HOME_FILMLIST, Constants.REQUEST_FLAG.HOME_HITFILMS, null, responseListener);
-        addGetRequest(Constants.CMD.HOME_CINEMALIST, Constants.REQUEST_FLAG.HOME_HITCINEMAS, null, responseListener);
+//        addGetRequest(Constants.CMD.HOME_FILMLIST, Constants.REQUEST_FLAG.HOME_HITFILMS, null, responseListener);
+//        addGetRequest(Constants.CMD.HOME_CINEMALIST, Constants.REQUEST_FLAG.HOME_HITCINEMAS, null, responseListener);
 
     }
 
@@ -134,6 +130,8 @@ public class Fragment_Home extends BaseFragment {
         @Override
         public void onSucceed(int what, Response response) {
             Logger.e(response.get().toString());
+            Logger.json(response.get().toString());
+//            String code = ((JsonObject) response.get()).get("Code").getAsString();
             switch (what) {
                 case Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP:
 //                    initAdvertisement(response);
@@ -178,49 +176,49 @@ public class Fragment_Home extends BaseFragment {
     /**
      * 加载首页最上方广告
      */
-    private void initAdvertisement(Response response) {
+    private void initAdvertisement() {
 
 //        List<Bean_Home_Advertisement> advertisementList = GsonUtil.fromJson(response.get().toString(), new TypeToken<List<Bean_Home_Advertisement>>(){});
 //
-////        String[] imagePaths = {
-////                "http://www.microfotos.com/pic/1/121/12199/1219932preview4.jpg",
-////                "http://d.hiphotos.baidu.com/exp/w=480/sign=e7f6471ade88d43ff0a990fa4d1fd2aa/024f78f0f736afc362c4df0abb19ebc4b6451290.jpg",
-////                "http://img2.imgtn.bdimg.com/it/u=508400732,572530980&fm=21&gp=0.jpg",
-////                "http://img5.imgtn.bdimg.com/it/u=2772389283,3198910176&fm=21&gp=0.jpg"
-////        };
-//        final ArrayList<ImageView> imageViewList = new ArrayList<>();
-//        for (Bean_Home_Advertisement temp : advertisementList) {
-//            ImageView imageView = new ImageView(mContext);
-//            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//            Glide.with(mContext).load(temp.getADVERTISEMENT_IMAGEPATH()).crossFade().centerCrop().into(imageView);
-//            imageViewList.add(imageView);
-//        }
-//        home_top_viewPager.setAdapter(new Adapter_ViewPager_ImageView(imageViewList));
-//        home_top_indicator.setRadius(13.0F);
-//        home_top_indicator.setPageColor(ContextCompat.getColor(getContext(), R.color.cyan700));
-//        home_top_indicator.setFillColor(ContextCompat.getColor(getContext(), R.color.ameber400));
-//        home_top_indicator.setStrokeColor(ContextCompat.getColor(getContext(), R.color.blueGrey600));
-//        home_top_indicator.setStrokeWidth(1.0F);
-//        home_top_indicator.setViewPager(home_top_viewPager);
-//
-//        // 自动轮播代码
-//        timer = new Timer();
-//        timer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                Message message = new Message();
-//                message.what = UPTATE_ADVERTISEMENT_TOP;
-//                if (home_top_viewPager.getCurrentItem() == imageViewList.size() - 1) {
-//                    message.arg1 = 0;
-//                } else {
-//                    message.arg1 = home_top_viewPager.getCurrentItem() + 1;
-//                }
-//                mHandler.sendMessage(message);
-//            }
-//        }, 5000, 5000);
+        String[] imagePaths = {
+                "http://www.microfotos.com/pic/1/121/12199/1219932preview4.jpg",
+                "http://d.hiphotos.baidu.com/exp/w=480/sign=e7f6471ade88d43ff0a990fa4d1fd2aa/024f78f0f736afc362c4df0abb19ebc4b6451290.jpg",
+                "http://img2.imgtn.bdimg.com/it/u=508400732,572530980&fm=21&gp=0.jpg",
+                "http://img5.imgtn.bdimg.com/it/u=2772389283,3198910176&fm=21&gp=0.jpg"
+        };
+        final ArrayList<ImageView> imageViewList = new ArrayList<>();
+        for (String temp : imagePaths) {
+            ImageView imageView = new ImageView(mContext);
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            Glide.with(mContext).load(temp).crossFade().centerCrop().into(imageView);
+            imageViewList.add(imageView);
+        }
+        home_top_viewPager.setAdapter(new Adapter_ViewPager_ImageView(imageViewList));
+        home_top_indicator.setRadius(13.0F);
+        home_top_indicator.setPageColor(ContextCompat.getColor(getContext(), R.color.cyan700));
+        home_top_indicator.setFillColor(ContextCompat.getColor(getContext(), R.color.ameber400));
+        home_top_indicator.setStrokeColor(ContextCompat.getColor(getContext(), R.color.blueGrey600));
+        home_top_indicator.setStrokeWidth(1.0F);
+        home_top_indicator.setViewPager(home_top_viewPager);
+
+        // 自动轮播代码
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = UPTATE_ADVERTISEMENT_TOP;
+                if (home_top_viewPager.getCurrentItem() == imageViewList.size() - 1) {
+                    message.arg1 = 0;
+                } else {
+                    message.arg1 = home_top_viewPager.getCurrentItem() + 1;
+                }
+                mHandler.sendMessage(message);
+            }
+        }, 5000, 5000);
     }
 
-    private void initHitFilms(Response response) {
+    private void initHitFilms() {
         List<Bean_Home_HitFilms> hitFilmsList = new ArrayList<>();
         hitFilmsList.add(new Bean_Home_HitFilms("电影1", "http://img2.imgtn.bdimg.com/it/u=1681751274,1729335524&fm=21&gp=0.jpg", "9.0"));
         hitFilmsList.add(new Bean_Home_HitFilms("电影2", "http://d15.lxyes.com/15xm/prev/20151211/9/99862808.jpg", "8.0"));
@@ -243,7 +241,7 @@ public class Fragment_Home extends BaseFragment {
 
     }
 
-    private void initHitCinemas(Response response) {
+    private void initHitCinemas() {
         List<Bean_Home_HitCinemas> hitCinemasList = new ArrayList<>();
         hitCinemasList.add(new Bean_Home_HitCinemas("院线1", "郑州市金水区CBD商务内环路111号", "http://img.bimg.126.net/photo/MXtJM3vL6Ch6LXEaaii0NQ==/5406008402705430190.jpg", "宽敞舒适", "4.0"));
         hitCinemasList.add(new Bean_Home_HitCinemas("院线2", "郑州市金水区CBD商务内环路222号", "http://img.bimg.126.net/photo/mRweK7G2KmwFhC_I654I9w==/5406008402705430205.jpg", "装修别致", "5.0"));

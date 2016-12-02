@@ -10,60 +10,70 @@ import org.litepal.crud.DataSupport;
 
 public class Bean_Home_HitCinemas extends DataSupport {
 
-    private String Cinema_Name;
-    private String Cinema_Address;
-    private String Cinema_Post;
-    private String Cinema_Feature;
-    private String Cinema_Rating;
+    private String store_basid;
+    private String store_name;
+    private String store_adress;
+    private String store_telephone;
+    private String store_score;
+    private String picture_type;
+    private String picture_address;
 
     public Bean_Home_HitCinemas() {
     }
 
-    public Bean_Home_HitCinemas(String cinema_Name, String cinema_Address, String cinema_Post, String cinema_Feature, String cinema_Rating) {
-        Cinema_Name = cinema_Name;
-        Cinema_Address = cinema_Address;
-        Cinema_Post = cinema_Post;
-        Cinema_Feature = cinema_Feature;
-        Cinema_Rating = cinema_Rating;
+    public String getStore_basid() {
+        return store_basid;
     }
 
-    public String getCinema_Name() {
-        return Cinema_Name;
+    public void setStore_basid(String store_basid) {
+        this.store_basid = store_basid;
     }
 
-    public void setCinema_Name(String cinema_Name) {
-        Cinema_Name = cinema_Name;
+    public String getStore_name() {
+        return store_name;
     }
 
-    public String getCinema_Address() {
-        return Cinema_Address;
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
     }
 
-    public void setCinema_Address(String cinema_Address) {
-        Cinema_Address = cinema_Address;
+    public String getStore_adress() {
+        return store_adress;
     }
 
-    public String getCinema_Post() {
-        return Cinema_Post;
+    public void setStore_adress(String store_adress) {
+        this.store_adress = store_adress;
     }
 
-    public void setCinema_Post(String cinema_Post) {
-        Cinema_Post = cinema_Post;
+    public String getStore_telephone() {
+        return store_telephone;
     }
 
-    public String getCinema_Feature() {
-        return Cinema_Feature;
+    public void setStore_telephone(String store_telephone) {
+        this.store_telephone = store_telephone;
     }
 
-    public void setCinema_Feature(String cinema_Feature) {
-        Cinema_Feature = cinema_Feature;
+    public String getStore_score() {
+        return store_score;
     }
 
-    public String getCinema_Rating() {
-        return Cinema_Rating;
+    public void setStore_score(String store_score) {
+        this.store_score = store_score;
     }
 
-    public void setCinema_Rating(String cinema_Rating) {
-        Cinema_Rating = cinema_Rating;
+    public String getPicture_type() {
+        return picture_type;
+    }
+
+    public void setPicture_type(String picture_type) {
+        this.picture_type = picture_type;
+    }
+
+    public String getPicture_address() {
+        return picture_address;
+    }
+
+    public void setPicture_address(String picture_address) {
+        this.picture_address = picture_address;
     }
 }

@@ -45,10 +45,10 @@ public class Adapter_Home_HitFilms extends RecyclerView.Adapter<Adapter_Home_Hit
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Glide.with(context).load(hitFilmsList.get(position).getFilm_ImagePath()).into(holder.imageView);
-        holder.tvFilmName.setText(hitFilmsList.get(position).getFilm_Name());
-        holder.tvFilmScore.setText(hitFilmsList.get(position).getFilm_Rating());
-        holder.rbFilmRating.setRating(Float.parseFloat(hitFilmsList.get(position).getFilm_Rating()) / 2);
+        Glide.with(context).load(hitFilmsList.get(position).getPicture_address()).into(holder.imageView);
+        holder.tvFilmName.setText(hitFilmsList.get(position).getMovie_name());
+        holder.tvFilmScore.setText(hitFilmsList.get(position).getScore());
+        holder.rbFilmRating.setRating(Float.parseFloat(hitFilmsList.get(position).getScore()) / 2);
 
         if (null != onItemClickListener) {
             holder.home_item_hitfilms.setOnClickListener(new View.OnClickListener() {

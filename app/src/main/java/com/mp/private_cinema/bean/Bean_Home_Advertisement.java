@@ -10,6 +10,7 @@ public class Bean_Home_Advertisement extends DataSupport {
 
     private String ADVERTISEMENT_IMAGEPATH;
     private String ADVERTISEMENT_LINKPATH;
+    private String ADVERTISEMENT_DEADLINE;
 
     public Bean_Home_Advertisement() {
     }
@@ -28,5 +29,13 @@ public class Bean_Home_Advertisement extends DataSupport {
 
     public void setADVERTISEMENT_IMAGEPATH(String ADVERTISEMENT_IMAGEPATH) {
         this.ADVERTISEMENT_IMAGEPATH = ADVERTISEMENT_IMAGEPATH;
+    }
+
+    public String getADVERTISEMENT_DEADLINE() {
+        return ADVERTISEMENT_DEADLINE;
+    }
+
+    public void setADVERTISEMENT_DEADLINE(String ADVERTISEMENT_DEADLINE) {
+        this.ADVERTISEMENT_DEADLINE = ADVERTISEMENT_DEADLINE;
     }
 }

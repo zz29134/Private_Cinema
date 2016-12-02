@@ -31,13 +31,9 @@ public class LibConstants {
     /**
      * URL头部
      */
-    public static final String URLHead = "http://61.52.195.141:8888/APP/";
+    public static final String URLHead = "http://125.41.182.75:8888/APP/";
 
-    interface netstate {
-        String readfail = "网络读取失败!";
-    }
-
-    interface jsName {
+    public interface JsonName {
         String code = "Code";
         String content = "Content";
         String state = "State";

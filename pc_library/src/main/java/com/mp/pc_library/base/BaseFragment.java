@@ -7,16 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
+import com.mp.pc_library.bean.ResponseData;
 import com.mp.pc_library.lib_event.StartBrotherEvent;
 import com.mp.pc_library.lib_event.StartParentEvent;
 import com.mp.pc_library.net.NoHttpUtils;
+import com.mp.pc_library.utils.GsonUtil;
+import com.orhanobut.logger.Logger;
 import com.yolanda.nohttp.download.DownloadListener;
 import com.yolanda.nohttp.rest.OnResponseListener;
+import com.yolanda.nohttp.rest.Response;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -36,14 +40,12 @@ public abstract class BaseFragment extends SupportFragment {
      */
     private Unbinder unbinder;
     protected Context mContext;
-    protected Gson mGson;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getContentID(), container, false);
         mContext = getContext();
-        mGson = new Gson();
         unbinder = ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         return view;
@@ -152,6 +154,53 @@ public abstract class BaseFragment extends SupportFragment {
      */
     protected void cancelUpLoad(int what) {
         NoHttpUtils.getInstance().cancelUpLoadBySign(what);
+    }
+
+    /**
+     * 获取结果Code
+     * @param response
+     * @return
+     */
+    protected String getResultCode(Response response) {
+
+        return GsonUtil.fromJson(response.get().toString(), ResponseData.class).getCode();
+    }
+
+    /**
+     * 获取结果State
+     * @param response
+     * @return
+     */
+    protected String getResultState(Response response) {
+        return GsonUtil.fromJson(response.get().toString(), ResponseData.class).getState();
+    }
+
+    /**
+     * 获取结果Content,String类型
+     * @param response
+     * @return
+     */
+    protected String getResultContentString(Response response) {
+        Logger.json(GsonUtil.fromJson(response.get().toString(), ResponseData.class).getContent().toString());
+        return GsonUtil.fromJson(response.get().toString(), ResponseData.class).getContent().toString();
+    }
+
+    /**
+     * 获取结果Content,JsonObject类型
+     * @param response
+     * @return
+     */
+    protected <T> T getResultContentJsonObject(Response response, Class<T> cls) {
+        return GsonUtil.fromJson(getResultContentString(response), cls);
+    }
+
+    /**
+     * 获取结果Content,JsonArray类型
+     * @param response
+     * @return
+     */
+    protected <T> List<T> getResultContentJsonArray(Response response, Class<T> cls) {
+        return GsonUtil.fromJsonArray(getResultContentString(response), cls);
     }
 
     protected abstract int getContentID();

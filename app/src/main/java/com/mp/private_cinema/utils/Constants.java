@@ -16,10 +16,10 @@ public class Constants {
     }
 
     public interface REQUEST_FLAG {
-        int LOGO_ADVERTISEMENT = 0x00F;
-        int HOME_ADVERTISEMENT_TOP = 0x01F;
-        int HOME_HITFILMS = 0x02F;
-        int HOME_HITCINEMAS = 0x03F;
+        int LOGO_ADVERTISEMENT = 0;
+        int HOME_ADVERTISEMENT_TOP = 1;
+        int HOME_HITFILMS = 2;
+        int HOME_HITCINEMAS = 3;
     }
 
     public interface CMD {

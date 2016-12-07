@@ -21,6 +21,16 @@ public class Bean_Home_HitCinemas extends DataSupport {
     public Bean_Home_HitCinemas() {
     }
 
+    public Bean_Home_HitCinemas(String store_basid, String store_name, String store_adress, String store_telephone, String store_score, String picture_type, String picture_address) {
+        this.store_basid = store_basid;
+        this.store_name = store_name;
+        this.store_adress = store_adress;
+        this.store_telephone = store_telephone;
+        this.store_score = store_score;
+        this.picture_type = picture_type;
+        this.picture_address = picture_address;
+    }
+
     public String getStore_basid() {
         return store_basid;
     }

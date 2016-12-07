@@ -40,6 +40,7 @@ public abstract class BaseFragment extends SupportFragment {
      */
     private Unbinder unbinder;
     protected Context mContext;
+    protected LayoutInflater mInflater;
 
     @Nullable
     @Override
@@ -47,6 +48,7 @@ public abstract class BaseFragment extends SupportFragment {
         View view = inflater.inflate(getContentID(), container, false);
         mContext = getContext();
         unbinder = ButterKnife.bind(this, view);
+        mInflater = LayoutInflater.from(mContext);
         EventBus.getDefault().register(this);
         return view;
     }

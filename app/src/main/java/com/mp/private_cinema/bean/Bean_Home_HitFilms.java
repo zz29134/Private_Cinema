@@ -28,6 +28,23 @@ public class Bean_Home_HitFilms extends DataSupport {
     public Bean_Home_HitFilms() {
     }
 
+    public Bean_Home_HitFilms(String movie_id, String movie_name, String movie_type, String release_year, String director, String actor, String other_name, String duration, String area, String introduction, String score, String recommend, String picture_address, String picture_type) {
+        this.movie_id = movie_id;
+        this.movie_name = movie_name;
+        this.movie_type = movie_type;
+        this.release_year = release_year;
+        this.director = director;
+        this.actor = actor;
+        this.other_name = other_name;
+        this.duration = duration;
+        this.area = area;
+        this.introduction = introduction;
+        this.score = score;
+        this.recommend = recommend;
+        this.picture_address = picture_address;
+        this.picture_type = picture_type;
+    }
+
     public String getArea() {
         return area;
     }

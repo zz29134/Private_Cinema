@@ -15,6 +15,12 @@ public class Bean_Home_Advertisement extends DataSupport {
     public Bean_Home_Advertisement() {
     }
 
+    public Bean_Home_Advertisement(String ADVERTISEMENT_IMAGEPATH, String ADVERTISEMENT_LINKPATH, String ADVERTISEMENT_DEADLINE) {
+        this.ADVERTISEMENT_IMAGEPATH = ADVERTISEMENT_IMAGEPATH;
+        this.ADVERTISEMENT_LINKPATH = ADVERTISEMENT_LINKPATH;
+        this.ADVERTISEMENT_DEADLINE = ADVERTISEMENT_DEADLINE;
+    }
+
     public String getADVERTISEMENT_LINKPATH() {
         return ADVERTISEMENT_LINKPATH;
     }

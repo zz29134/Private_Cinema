@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:gravity="center">
+    android:gravity="center"
+    android:padding="10dp">
 
     <ProgressBar
         android:id="@+id/bottom_progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 
     <TextView
+        android:id="@+id/bottom_load_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:gravity="center_horizontal"
         android:textSize="20sp"
-        android:text="@string/loading" />
+        android:text="@string/loading_has_data" />
 </LinearLayout>

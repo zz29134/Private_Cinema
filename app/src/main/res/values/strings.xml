@@ -5,6 +5,10 @@
     <string name="hit_film">热映影片</string>
     <string name="hit_cinema">推荐院线</string>
     <string name="more">更多</string>
-    <string name="loading">加载中&#8230;</string>
+    <string name="loading_has_data">加载中&#8230;</string>
+    <string name="loading_nomore_data">暂无更多数据</string>
+    <string name="header_pull_label">下拉刷新</string>
+    <string name="header_refreshing_label">正在加载</string>
+    <string name="header_release_label">松开刷新</string>
 
 </resources>

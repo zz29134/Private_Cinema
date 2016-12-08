@@ -11,14 +11,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
-import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.mp.pc_library.utils.ToastUtils;
+import com.kevin.wraprecyclerview.BaseRecyclerAdapter;
 import com.mp.private_cinema.R;
 import com.mp.private_cinema.bean.Bean_Home_HitCinemas;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,75 +26,37 @@ import butterknife.ButterKnife;
  * 说明
  */
 
-public class Adapter_Home_HitCinemas extends UltimateViewAdapter {
+public class Adapter_Home_HitCinemas extends BaseRecyclerAdapter<Bean_Home_HitCinemas, Adapter_Home_HitCinemas.ViewHolder> {
 
-    private Context mContext;
-    private List<Bean_Home_HitCinemas> cinemases = new ArrayList<>();
-
-    public Adapter_Home_HitCinemas(Context mContext, List<Bean_Home_HitCinemas> cinemases) {
-        this.mContext = mContext;
-        this.cinemases = cinemases;
+    public Adapter_Home_HitCinemas(Context context) {
+        super(context);
     }
 
-    public List<Bean_Home_HitCinemas> getCinemases() {
-        return cinemases;
-    }
-
-    public void setCinemases(List<Bean_Home_HitCinemas> cinemases) {
-        this.cinemases = cinemases;
+    public Adapter_Home_HitCinemas(Context mContext, LinkedList<Bean_Home_HitCinemas> mItemLists) {
+        super(mContext, mItemLists);
     }
 
     @Override
-    public RecyclerView.ViewHolder newFooterHolder(View view) {
-        return new UltimateRecyclerviewViewHolder<>(view);
-    }
-
-    @Override
-    public RecyclerView.ViewHolder newHeaderHolder(View view) {
-        return new UltimateRecyclerviewViewHolder<>(view);
-    }
-
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_item_hitcinemas, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public int getAdapterItemCount() {
-        return cinemases.size();
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.position = position;
+
+        holder.hitCinemaName.setText(mItemLists.get(position).getStore_name());
+        holder.hitCinemaFeature.setText(mItemLists.get(position).getStore_telephone());
+        holder.hitCinemaAddress.setText(mItemLists.get(position).getStore_adress());
+        holder.rbCinemaRating.setRating(Float.parseFloat(mItemLists.get(position).getStore_score()) / 2);
+        Glide.with(mContext).load(mItemLists.get(position).getPicture_address()).into(holder.hitCinemaImageView);
     }
 
-    @Override
-    public long generateHeaderId(int position) {
-        return -1;
-    }
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position < getItemCount() && (customHeaderView != null ? position <= cinemases.size() : position < cinemases.size())
-                && (customHeaderView == null || position > 0)) {
-            position -= customHeaderView == null ? 0 : 1;
-            ((ViewHolder) holder).hitCinemaName.setText(cinemases.get(position).getStore_name());
-            ((ViewHolder) holder).hitCinemaFeature.setText(cinemases.get(position).getStore_telephone());
-            ((ViewHolder) holder).hitCinemaAddress.setText(cinemases.get(position).getStore_adress());
-            ((ViewHolder) holder).rbCinemaRating.setRating(Float.parseFloat(cinemases.get(position).getStore_score()) / 2);
-            Glide.with(mContext).load(cinemases.get(position).getPicture_address()).into(((ViewHolder) holder).hitCinemaImageView);
+        int position;
 
-        }
-    }
-
-    @Override
-    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        return null;
-    }
-
-    @Override
-    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-    }
-
-    class ViewHolder extends UltimateRecyclerviewViewHolder {
         @BindView(R.id.hitCinema_ImageView)
         ImageView hitCinemaImageView;
         @BindView(R.id.hitCinema_Name)
@@ -117,8 +76,18 @@ public class Adapter_Home_HitCinemas extends UltimateViewAdapter {
         }
 
         @Override
-        public void onItemSelected() {
-            ToastUtils.show(mContext, hitCinemaName.getText());
+        public void onClick(View view) {
+            if (null != onRecyclerViewListener) {
+                onRecyclerViewListener.onItemClick(view, position);
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (null != onRecyclerViewListener) {
+                return onRecyclerViewListener.onItemLongClick(position);
+            }
+            return false;
         }
     }
 }

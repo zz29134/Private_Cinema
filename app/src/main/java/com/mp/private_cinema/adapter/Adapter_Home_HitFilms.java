@@ -84,6 +84,11 @@ public class Adapter_Home_HitFilms extends RecyclerView.Adapter<Adapter_Home_Hit
         }
     }
 
+    public void addData(List<Bean_Home_HitFilms> hitFilms) {
+        hitFilmsList.addAll(hitFilms);
+        this.notifyDataSetChanged();
+    }
+
     private OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
@@ -93,4 +98,6 @@ public class Adapter_Home_HitFilms extends RecyclerView.Adapter<Adapter_Home_Hit
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
+
 }

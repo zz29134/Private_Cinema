@@ -2,7 +2,6 @@ package com.mp.private_cinema.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.idisfkj.loopview.LoopView;
-import com.idisfkj.loopview.entity.LoopViewEntity;
+import com.kevin.loopview.AdLoopView;
+import com.kevin.loopview.internal.LoopData;
 import com.kevin.ultimaterecyclerview.UltimateRecyclerView;
 import com.kevin.wraprecyclerview.WrapRecyclerView;
 import com.mp.pc_library.base.BaseFragment;
@@ -39,6 +38,7 @@ import butterknife.OnClick;
 
 import static com.mp.private_cinema.R.id.homeRecyclerView;
 
+
 /**
  * 创建人 Zhangzhe
  * 日期   2016/11/16
@@ -48,8 +48,9 @@ import static com.mp.private_cinema.R.id.homeRecyclerView;
 public class Fragment_Home extends BaseFragment {
 
     private RecyclerView hitFilm_RecyclerView;
-    private LoopView loopView;
+    private AdLoopView loopView;
     private DefaultLoadLayout loadLayout;
+    private DefaultRefreshLayout refreshLayout;
     private Adapter_Home_HitCinemas cinemasAdapter;
 
     @BindView(R.id.home_two_bar_code_scanner)
@@ -80,20 +81,23 @@ public class Fragment_Home extends BaseFragment {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
-        mUltimateRecyclerView.setHeaderLayout(new DefaultRefreshLayout(mContext));
-        loadLayout = new DefaultLoadLayout(mContext);
-        mUltimateRecyclerView.setSecondFooterLayout(loadLayout);
-
         WrapRecyclerView mWrapRecyclerView = mUltimateRecyclerView.getRefreshableView();
-        mWrapRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+        mWrapRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mWrapRecyclerView.setItemAnimator(new DefaultItemAnimator());
         cinemasAdapter = new Adapter_Home_HitCinemas(mContext);
         mWrapRecyclerView.setAdapter(cinemasAdapter);
         mWrapRecyclerView.addHeaderView(initHeaderView());
 
+        refreshLayout = new DefaultRefreshLayout(mContext);
+        mUltimateRecyclerView.setHeaderLayout(refreshLayout);
+        loadLayout = new DefaultLoadLayout(mContext);
+        mUltimateRecyclerView.setSecondFooterLayout(loadLayout);
+
         addGetRequest(Constants.CMD.HOME_ADVERTISEMENT, Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP, null, responseListener);
         addGetRequest(Constants.CMD.HOME_FILMLIST, Constants.REQUEST_FLAG.HOME_HITFILMS, null, responseListener);
         addGetRequest(Constants.CMD.HOME_CINEMALIST, Constants.REQUEST_FLAG.HOME_HITCINEMAS, null, responseListener);
+
+        initEvent();
 
 //        List<Bean_Home_Advertisement> advertisements = new ArrayList<>();
 //        advertisements.add(new Bean_Home_Advertisement("http://img1.gamedog.cn/2012/07/13/24-120G30940540.jpg", "", ""));
@@ -122,8 +126,17 @@ public class Fragment_Home extends BaseFragment {
     private View initHeaderView() {
         View headerView = mInflater.inflate(R.layout.home_recyclerview_headerview, mUltimateRecyclerView.getRefreshableView(), false);
         loopView = ButterKnife.findById(headerView, R.id.home_LoopView);
-        hitFilm_RecyclerView = ButterKnife.findById(headerView, R.id.hitFilm_RecyclerView);
 
+        hitFilm_RecyclerView = ButterKnife.findById(headerView, R.id.hitFilm_RecyclerView);
+        hitFilm_RecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        Adapter_Home_HitFilms adapter_home_hitFilms = new Adapter_Home_HitFilms(mContext, new ArrayList<Bean_Home_HitFilms>());
+        adapter_home_hitFilms.setOnItemClickListener(new Adapter_Home_HitFilms.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, Bean_Home_HitFilms hitFilms) {
+                ToastUtils.show(mContext, hitFilms.getMovie_name());
+            }
+        });
+        hitFilm_RecyclerView.setAdapter(adapter_home_hitFilms);
         return headerView;
     }
 
@@ -191,30 +204,18 @@ public class Fragment_Home extends BaseFragment {
         }
     };
 
-    /**
-     * @param advertisements
-     */
     private void initAdvertisement(List<Bean_Home_Advertisement> advertisements) {
-        List<LoopViewEntity> entityList = new ArrayList<>();
+        LoopData loopData = new LoopData();
+        loopData.items = new ArrayList<>();
         for (Bean_Home_Advertisement temp : advertisements) {
-            LoopViewEntity entity = new LoopViewEntity();
-            entity.setImageUrl(temp.getADVERTISEMENT_IMAGEPATH());
-            entityList.add(entity);
+            LoopData.ItemData data = loopData.new ItemData("", temp.getADVERTISEMENT_IMAGEPATH(), "", "", "");
+            loopData.items.add(data);
         }
-        loopView.setLoopData(entityList);
-
+        loopView.setLoopViewPager(loopData);
     }
 
     private void initHitFilms(List<Bean_Home_HitFilms> filmses) {
-        Adapter_Home_HitFilms adapter_home_hitFilms = new Adapter_Home_HitFilms(mContext, filmses);
-        adapter_home_hitFilms.setOnItemClickListener(new Adapter_Home_HitFilms.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, Bean_Home_HitFilms hitFilms) {
-                ToastUtils.show(mContext, hitFilms.getMovie_name());
-            }
-        });
-        hitFilm_RecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        hitFilm_RecyclerView.setAdapter(adapter_home_hitFilms);
+        ((Adapter_Home_HitFilms) hitFilm_RecyclerView.getAdapter()).addData(filmses);
     }
 
     private void initHitCinemas(List<Bean_Home_HitCinemas> cinemases) {

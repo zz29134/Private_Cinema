@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:loop="http://schemas.android.com/apk/res-auto"
+    xmlns:kevin="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.idisfkj.loopview.LoopView
+    <com.kevin.loopview.AdLoopView
         android:id="@+id/home_LoopView"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/colorPrimaryDark"
-        loop:bottom_style="@integer/loop_no_descript_right"
-        loop:rate="5"/>
+        kevin:loop_interval="5000"
+        kevin:loop_dotMargin="5dp"
+        kevin:loop_autoLoop="true"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -6,13 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.mp.private_cinema.R;
 import com.mrw.wzmrecyclerview.PullToRefresh.PullToRefreshRecyclerView;
 import com.mrw.wzmrecyclerview.PullToRefresh.RefreshHeaderCreator;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 /**
  * 创建人 Zhangzhe <br/>
@@ -22,25 +22,25 @@ import com.nineoldandroids.animation.ValueAnimator;
 
 public class MyDefaultRecyclerViewHeader extends RefreshHeaderCreator {
 
-    private View mRefreshView;
     private ImageView iv;
-    private TextView tv;
-
-    private int rotationDuration = 200;
-
-    private int loadingDuration = 1000;
     private ValueAnimator ivAnim;
 
-
     @Override
-    public boolean onStartPull(float distance,int lastState) {
-        if (lastState == PullToRefreshRecyclerView.STATE_DEFAULT ) {
-            iv.setImageResource(R.drawable.arrow_down);
+    public boolean onStartPull(float distance, int lastState) {
+        float scaleOfLayout = distance / mRefreshView.getHeight();
+        if (lastState == PullToRefreshRecyclerView.STATE_DEFAULT) {
+//            iv.setImageResource(R.drawable.arrow_down);
             iv.setRotation(0f);
-            tv.setText("下拉刷新");
+        } else if (lastState == PullToRefreshRecyclerView.STATE_PULLING) {
+            //缩放动画
+            ViewHelper.setPivotY(iv, iv.getMeasuredHeight());   // 设置中心点
+            ViewHelper.setPivotX(iv, iv.getMeasuredWidth() / 2);
+            ObjectAnimator animPX = ObjectAnimator.ofFloat(iv, "scaleX", 0, 1).setDuration(300);
+            animPX.setCurrentPlayTime((long) (scaleOfLayout * 300));
+            ObjectAnimator animPY = ObjectAnimator.ofFloat(iv, "scaleY", 0, 1).setDuration(300);
+            animPY.setCurrentPlayTime((long) (scaleOfLayout * 300));
         } else if (lastState == PullToRefreshRecyclerView.STATE_RELEASE_TO_REFRESH) {
             startArrowAnim(0);
-            tv.setText("下拉刷新");
         }
         return true;
     }
@@ -54,39 +54,35 @@ public class MyDefaultRecyclerViewHeader extends RefreshHeaderCreator {
 
 
     @Override
-    public boolean onReleaseToRefresh(float distance,int lastState) {
-        if (lastState == PullToRefreshRecyclerView.STATE_DEFAULT ) {
-            iv.setImageResource(R.drawable.arrow_down);
+    public boolean onReleaseToRefresh(float distance, int lastState) {
+        if (lastState == PullToRefreshRecyclerView.STATE_DEFAULT) {
+//            iv.setImageResource(R.drawable.arrow_down);
             iv.setRotation(-180f);
-            tv.setText("松手立即刷新");
         } else if (lastState == PullToRefreshRecyclerView.STATE_PULLING) {
             startArrowAnim(-180f);
-            tv.setText("松手立即刷新");
         }
         return true;
     }
 
     @Override
     public void onStartRefreshing() {
-        iv.setImageResource(R.drawable.loading);
+//        iv.setImageResource(R.drawable.loading);
         startLoadingAnim();
-        tv.setText("正在刷新...");
     }
 
     @Override
     public View getRefreshView(Context context, RecyclerView recyclerView) {
-        mRefreshView = LayoutInflater.from(context).inflate(R.layout.layout_ptr_ptl,recyclerView,false);
-        iv = (ImageView) mRefreshView.findViewById(R.id.iv);
-        tv = (TextView) mRefreshView.findViewById(R.id.tv);
+        mRefreshView = LayoutInflater.from(context).inflate(R.layout.widget_recyclerview_headerview, recyclerView, false);
+        iv = (ImageView) mRefreshView.findViewById(R.id.pull_to_refresh);
         return mRefreshView;
     }
 
-    private void startArrowAnim(float roration) {
+    private void startArrowAnim(float rotation) {
         if (ivAnim != null) {
             ivAnim.cancel();
         }
         float startRotation = iv.getRotation();
-        ivAnim = ObjectAnimator.ofFloat(startRotation,roration).setDuration(rotationDuration);
+        ivAnim = ObjectAnimator.ofFloat(startRotation, rotation).setDuration(200);
         ivAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -100,7 +96,7 @@ public class MyDefaultRecyclerViewHeader extends RefreshHeaderCreator {
         if (ivAnim != null) {
             ivAnim.cancel();
         }
-        ivAnim = ObjectAnimator.ofFloat(0,360).setDuration(loadingDuration);
+        ivAnim = ObjectAnimator.ofFloat(0, 360).setDuration(1000);
         ivAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {

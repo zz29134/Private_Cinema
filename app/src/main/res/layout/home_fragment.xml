@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight">
 
-    <com.mrw.wzmrecyclerview.PullToLoad.PullToLoadRecyclerView
+    <com.mrw.wzmrecyclerview.AutoLoad.AutoLoadRecyclerView
         android:id="@+id/autoLoadRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

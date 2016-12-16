@@ -23,10 +23,11 @@ import com.mp.private_cinema.bean.Bean_Home_HitFilms;
 import com.mp.private_cinema.utils.Constants;
 import com.mp.private_cinema.widget.MyDefaultRecyclerViewFooter;
 import com.mp.private_cinema.widget.MyDefaultRecyclerViewHeader;
+import com.mrw.wzmrecyclerview.AutoLoad.AutoLoadRecyclerView;
 import com.mrw.wzmrecyclerview.HeaderAndFooter.OnItemClickListener;
-import com.mrw.wzmrecyclerview.Manager.WZMLinearLayoutManager;
+import com.mrw.wzmrecyclerview.LayoutManager.WZMLinearLayoutManager;
 import com.mrw.wzmrecyclerview.PullToLoad.OnLoadListener;
-import com.mrw.wzmrecyclerview.PullToLoad.PullToLoadRecyclerView;
+import com.mrw.wzmrecyclerview.PullToRefresh.OnRefreshListener;
 import com.mrw.wzmrecyclerview.SimpleAdapter.SimpleAdapter;
 import com.mrw.wzmrecyclerview.SimpleAdapter.ViewHolder;
 import com.yolanda.nohttp.rest.OnResponseListener;
@@ -60,7 +61,7 @@ public class Fragment_Home extends BaseFragment {
     private List<Bean_Home_HitCinemas> cinemas = new ArrayList<>();
 
     @BindView(R.id.autoLoadRecyclerView)
-    PullToLoadRecyclerView autoLoadRecyclerView;
+    AutoLoadRecyclerView autoLoadRecyclerView;
 
     @OnClick(R.id.home_search)
     public void onClick() {
@@ -111,7 +112,7 @@ public class Fragment_Home extends BaseFragment {
             }
         });
         autoLoadRecyclerView.setRefreshViewCreator(new MyDefaultRecyclerViewHeader());
-        autoLoadRecyclerView.setLoadViewCreator(new MyDefaultRecyclerViewFooter());
+        autoLoadRecyclerView.setAutoLoadViewCreator(new MyDefaultRecyclerViewFooter());
         autoLoadRecyclerView.addHeaderView(initHeaderView());
         autoLoadRecyclerView.setOnLoadListener(new OnLoadListener() {
 
@@ -119,20 +120,33 @@ public class Fragment_Home extends BaseFragment {
 
             @Override
             public void onStartLoading(int skip) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (i < 3) {
-//                                autoLoadRecyclerView.setNoMore(false);
-                                initHitCinemas(cinemas);
-                                i ++;
-                                autoLoadRecyclerView.completeLoad();
-                            } else {
-//                                autoLoadRecyclerView.setNoMore(true);
-                                autoLoadRecyclerView.completeLoad();
-                            }
+                i++;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (i < 3) {
+                            autoLoadRecyclerView.setNoMore(false);
+                            initHitCinemas(cinemas);
+                            autoLoadRecyclerView.completeLoad();
+                        } else {
+                            autoLoadRecyclerView.setNoMore(true);
+                            autoLoadRecyclerView.completeLoad();
                         }
-                    }, 2000);
+                    }
+                }, 2000);
+            }
+        });
+        autoLoadRecyclerView.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onStartRefreshing() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        cinemas.clear();
+                        initHitCinemas(cinemas);
+                        autoLoadRecyclerView.completeRefresh();
+                    }
+                }, 3000);
             }
         });
         autoLoadRecyclerView.setOnItemClickListener(new OnItemClickListener() {

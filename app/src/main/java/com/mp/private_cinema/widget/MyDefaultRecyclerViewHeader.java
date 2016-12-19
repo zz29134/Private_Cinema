@@ -12,7 +12,6 @@ import com.mrw.wzmrecyclerview.PullToRefresh.PullToRefreshRecyclerView;
 import com.mrw.wzmrecyclerview.PullToRefresh.RefreshHeaderCreator;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 /**
  * 创建人 Zhangzhe <br/>
@@ -27,14 +26,14 @@ public class MyDefaultRecyclerViewHeader extends RefreshHeaderCreator {
 
     @Override
     public boolean onStartPull(float distance, int lastState) {
-        float scaleOfLayout = distance / mRefreshView.getHeight();
         if (lastState == PullToRefreshRecyclerView.STATE_DEFAULT) {
-//            iv.setImageResource(R.drawable.arrow_down);
             iv.setRotation(0f);
         } else if (lastState == PullToRefreshRecyclerView.STATE_PULLING) {
+            float scaleOfLayout = distance / mRefreshView.getHeight();
+            ObjectAnimator translate = ObjectAnimator.ofFloat(iv, "Y", mRefreshView.getHeight() - iv.getHeight() / 2,
+                    (mRefreshView.getHeight() - iv.getHeight()) / 2).setDuration(300);
+            translate.setCurrentPlayTime((long) (scaleOfLayout * 300));
             //缩放动画
-            ViewHelper.setPivotY(iv, iv.getMeasuredHeight());   // 设置中心点
-            ViewHelper.setPivotX(iv, iv.getMeasuredWidth() / 2);
             ObjectAnimator animPX = ObjectAnimator.ofFloat(iv, "scaleX", 0, 1).setDuration(300);
             animPX.setCurrentPlayTime((long) (scaleOfLayout * 300));
             ObjectAnimator animPY = ObjectAnimator.ofFloat(iv, "scaleY", 0, 1).setDuration(300);
@@ -56,7 +55,6 @@ public class MyDefaultRecyclerViewHeader extends RefreshHeaderCreator {
     @Override
     public boolean onReleaseToRefresh(float distance, int lastState) {
         if (lastState == PullToRefreshRecyclerView.STATE_DEFAULT) {
-//            iv.setImageResource(R.drawable.arrow_down);
             iv.setRotation(-180f);
         } else if (lastState == PullToRefreshRecyclerView.STATE_PULLING) {
             startArrowAnim(-180f);
@@ -66,7 +64,6 @@ public class MyDefaultRecyclerViewHeader extends RefreshHeaderCreator {
 
     @Override
     public void onStartRefreshing() {
-//        iv.setImageResource(R.drawable.loading);
         startLoadingAnim();
     }
 
@@ -81,6 +78,8 @@ public class MyDefaultRecyclerViewHeader extends RefreshHeaderCreator {
         if (ivAnim != null) {
             ivAnim.cancel();
         }
+//        ViewHelper.setPivotY(iv, iv.getMeasuredHeight() / 2);   // 设置中心点
+//        ViewHelper.setPivotX(iv, iv.getMeasuredWidth() / 2);
         float startRotation = iv.getRotation();
         ivAnim = ObjectAnimator.ofFloat(startRotation, rotation).setDuration(200);
         ivAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -108,74 +107,4 @@ public class MyDefaultRecyclerViewHeader extends RefreshHeaderCreator {
         ivAnim.setInterpolator(new LinearInterpolator());
         ivAnim.start();
     }
-
-//    private Context context;
-//    private View refreshView;
-//    private ImageView imageView;
-//
-//    public MyDefaultRecyclerViewHeader(Context context) {
-//        this.context = context;
-//    }
-//
-//    /**
-//     * 下拉
-//     *
-//     * @param distance  距离
-//     * @param lastState
-//     * @return 下拉距离，返回true表示可以继续下拉
-//     */
-//    @Override
-//    public boolean onStartPull(float distance, int lastState) {
-//        float refreshViewHeight = refreshView.getHeight();
-//        float scaleOfLayout = distance / refreshViewHeight;
-//        Log.e("distance:" + distance, "lastState:" + lastState);
-//        scaleOfLayout = scaleOfLayout > 1.0f ? 1.0f : scaleOfLayout;
-//
-//        //缩放动画
-//        ViewHelper.setPivotY(imageView, imageView.getMeasuredHeight());   // 设置中心点
-//        ViewHelper.setPivotX(imageView, imageView.getMeasuredWidth() / 2);
-//        ObjectAnimator animPX = ObjectAnimator.ofFloat(imageView, "scaleX", 0, 1).setDuration(300);
-//        animPX.setCurrentPlayTime((long) (scaleOfLayout * 300));
-//        ObjectAnimator animPY = ObjectAnimator.ofFloat(imageView, "scaleY", 0, 1).setDuration(300);
-//        animPY.setCurrentPlayTime((long) (scaleOfLayout * 300));
-//
-//        return true;
-//    }
-//
-//    /**
-//     * 松手刷新
-//     *
-//     * @param distance  距离
-//     * @param lastState
-//     * @return 下拉距离，返回true表示可以继续下拉
-//     */
-//    @Override
-//    public boolean onReleaseToRefresh(float distance, int lastState) {
-//
-//        return true;
-//    }
-//
-//    /**
-//     * 开始刷新
-//     */
-//    @Override
-//    public void onStartRefreshing() {
-//        imageView.clearAnimation();
-//        imageView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.default_refresh_header));
-//    }
-//
-//    @Override
-//    public View getRefreshView(Context context, RecyclerView recyclerView) {
-//        refreshView = LayoutInflater.from(context).inflate(R.layout.widget_recyclerview_headerview, recyclerView, false);
-//        imageView = ButterKnife.findById(refreshView, R.id.pull_to_refresh);
-//        return refreshView;
-//    }
-//
-//    /**
-//     * 刷新结束
-//     */
-//    @Override
-//    public void onStopRefresh() {
-//        imageView.clearAnimation();
-//    }
 }

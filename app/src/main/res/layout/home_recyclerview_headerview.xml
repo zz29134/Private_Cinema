@@ -57,7 +57,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/hitFilm_RecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:clipToPadding="false"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"

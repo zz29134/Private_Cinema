@@ -79,16 +79,7 @@ public class Fragment_Home extends BaseFragment {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
-
-//        add_advertisement_data();
-//        add_films_data();
-//        add_cinemas_data();
-
         initAutoLoadRecyclerView();
-
-//        initAdvertisement(advertisements);
-//        initHitFilms(hitFilms);
-//        initHitCinemas(cinemas);
     }
 
     private void initAutoLoadRecyclerView() {
@@ -110,10 +101,8 @@ public class Fragment_Home extends BaseFragment {
 
             @Override
             public void onStartLoading(int skip) {
-                Map<String, String> paramsCinema = new HashMap<>();
-                paramsCinema.put(Constants.params.offset, OFFSET + LIMIT + "");
-                paramsCinema.put(Constants.params.limit, LIMIT + "");
-                addGetRequest(Constants.CMD.CINEMA_RECOMMEND, Constants.REQUEST_FLAG.CINEMA_RECOMMEND, paramsCinema, responseListener);
+                OFFSET = OFFSET + LIMIT;
+                getData();
             }
         });
         autoLoadRecyclerView.setOnRefreshListener(new OnRefreshListener() {
@@ -122,10 +111,7 @@ public class Fragment_Home extends BaseFragment {
             public void onStartRefreshing() {
                 hitCinemasList.clear();
                 OFFSET = 0;
-                Map<String, String> paramsCinema = new HashMap<>();
-                paramsCinema.put(Constants.params.offset, OFFSET + "");
-                paramsCinema.put(Constants.params.limit, LIMIT + "");
-                addGetRequest(Constants.CMD.CINEMA_RECOMMEND, Constants.REQUEST_FLAG.CINEMA_RECOMMEND, paramsCinema, responseListener);
+                getData();
             }
         });
         autoLoadRecyclerView.setOnItemClickListener(new OnItemClickListener() {
@@ -137,7 +123,7 @@ public class Fragment_Home extends BaseFragment {
     }
 
     private View initHeaderView() {
-        View headerView = mInflater.inflate(R.layout.home_recyclerview_headerview, autoLoadRecyclerView, false);
+        View headerView = mInflater.inflate(R.layout.home_recyclerview_headerview, null);
         loopView = ButterKnife.findById(headerView, R.id.home_LoopView);
         hitFilm_RecyclerView = ButterKnife.findById(headerView, R.id.hitFilm_RecyclerView);
         hitFilm_RecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
@@ -174,26 +160,25 @@ public class Fragment_Home extends BaseFragment {
         if (cinemases != null) {
             if (cinemases.size() < LIMIT) {
                 autoLoadRecyclerView.setNoMore(true);
+            } else {
+                autoLoadRecyclerView.setNoMore(false);
             }
             hitCinemasList.addAll(cinemases);
             autoLoadRecyclerView.getAdapter().notifyDataSetChanged();
         } else {
 
         }
-
+        autoLoadRecyclerView.completeRefresh();
+        autoLoadRecyclerView.completeLoad();
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-//            addGetRequest(Constants.CMD.HOME_ADVERTISEMENT, Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP, null, responseListener);
-//            addGetRequest(Constants.CMD.HOME_FILMLIST, Constants.REQUEST_FLAG.HOME_HITFILMS, null, responseListener);
-
-            Map<String, String> paramsCinema = new HashMap<>();
-            paramsCinema.put(Constants.params.offset, OFFSET + "");
-            paramsCinema.put(Constants.params.limit, LIMIT + "");
-            addGetRequest(Constants.CMD.CINEMA_RECOMMEND, Constants.REQUEST_FLAG.CINEMA_RECOMMEND, paramsCinema, responseListener);
+            addGetRequest(Constants.CMD.HOME_ADVERTISEMENT, Constants.REQUEST_FLAG.HOME_ADVERTISEMENT_TOP, null, responseListener);
+            addGetRequest(Constants.CMD.HOME_FILMLIST, Constants.REQUEST_FLAG.HOME_HITFILMS, null, responseListener);
+            getData();
         }
     }
 
@@ -261,28 +246,10 @@ public class Fragment_Home extends BaseFragment {
         }
     };
 
-//    private void add_advertisement_data() {
-//        advertisements.add(new Bean_Home_Advertisement("http://img1.gamedog.cn/2012/07/13/24-120G30940540.jpg", "", ""));
-//        advertisements.add(new Bean_Home_Advertisement("http://pic.lvmama.com/uploads/pc/place2/2015-08-03/032897a6-f54e-4030-b95c-aa9c2ae83947_480_320.jpg", "", ""));
-//        advertisements.add(new Bean_Home_Advertisement("http://img3.imgtn.bdimg.com/it/u=656334941,1373975950&fm=21&gp=0.jpg", "", ""));
-//        advertisements.add(new Bean_Home_Advertisement("http://img1.qunarzz.com/travel/poi/1408/26/fc137f9bab25161bffffffffc8d65eac.jpg_r_480x360x95_7ab8a034.jpg", "", ""));
-//    }
-//
-//    private void add_films_data() {
-//        hitFilms.add(new Bean_Home_HitFilms("1", "电影1", "type1", "", "", "", "", "", "", "", "1", "", "http://image4.xyzs.com/upload/77/6d/1447032350767745/20151110/144712267591355_0.png", ""));
-//        hitFilms.add(new Bean_Home_HitFilms("2", "电影2", "type2", "", "", "", "", "", "", "", "2", "", "http://img.25pp.com/uploadfile/bizhi/iphone3/2013/0117/20130117111149500.jpg", ""));
-//        hitFilms.add(new Bean_Home_HitFilms("3", "电影3", "type3", "", "", "", "", "", "", "", "3", "", "http://img2.imgtn.bdimg.com/it/u=1833678113,705995739&fm=21&gp=0.jpg", ""));
-//        hitFilms.add(new Bean_Home_HitFilms("4", "电影4", "type4", "", "", "", "", "", "", "", "4", "", "http://att.x2.hiapk.com/forum/201205/27/2248307767q30felqe77em.jpg", ""));
-//        hitFilms.add(new Bean_Home_HitFilms("5", "电影5", "type5", "", "", "", "", "", "", "", "5", "", "http://img.25pp.com/uploadfile/bizhi/iphone3/2014/1027/20141027055746977.jpg", ""));
-//        hitFilms.add(new Bean_Home_HitFilms("6", "电影6", "type6", "", "", "", "", "", "", "", "6", "", "http://img.lenovomm.com/s3/img/app/app-img-lestore/8275-2015-09-10115719-1441929439127.jpeg?isCompress=true&width=320&height=480&quantity=1&rotate=true", ""));
-//    }
-//
-//    private void add_cinemas_data() {
-//        cinemas.add(new Bean_Home_HitCinemas("", "影院1", "地址：XXXXXXXXXXXXXX", "电话：15111111111", "3", "", "http://image4.xyzs.com/upload/77/6d/1447032350767745/20151110/144712267591355_0.png"));
-//        cinemas.add(new Bean_Home_HitCinemas("", "影院2", "地址：XXXXXXXXXXXXXX", "电话：15111111111", "4", "", "http://img.25pp.com/uploadfile/bizhi/iphone3/2013/0117/20130117111149500.jpg"));
-//        cinemas.add(new Bean_Home_HitCinemas("", "影院3", "地址：XXXXXXXXXXXXXX", "电话：15111111111", "5", "", "http://img2.imgtn.bdimg.com/it/u=1833678113,705995739&fm=21&gp=0.jpg"));
-//        cinemas.add(new Bean_Home_HitCinemas("", "影院4", "地址：XXXXXXXXXXXXXX", "电话：15111111111", "6", "", "http://att.x2.hiapk.com/forum/201205/27/2248307767q30felqe77em.jpg"));
-//        cinemas.add(new Bean_Home_HitCinemas("", "影院5", "地址：XXXXXXXXXXXXXX", "电话：15111111111", "7", "", "http://img.25pp.com/uploadfile/bizhi/iphone3/2014/1027/20141027055746977.jpg"));
-//        cinemas.add(new Bean_Home_HitCinemas("", "影院6", "地址：XXXXXXXXXXXXXX", "电话：15111111111", "8", "", "http://img.lenovomm.com/s3/img/app/app-img-lestore/8275-2015-09-10115719-1441929439127.jpeg?isCompress=true&width=320&height=480&quantity=1&rotate=true"));
-//    }
+    private void getData() {
+        Map<String, String> paramsCinema = new HashMap<>();
+        paramsCinema.put(Constants.params.offset, OFFSET + "");
+        paramsCinema.put(Constants.params.limit, LIMIT + "");
+        addGetRequest(Constants.CMD.CINEMA_RECOMMEND, Constants.REQUEST_FLAG.CINEMA_RECOMMEND, paramsCinema, responseListener);
+    }
 }

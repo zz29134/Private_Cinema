@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
     android:background="@color/colorPrimaryLight">
-
-    <com.mrw.wzmrecyclerview.AutoLoad.AutoLoadRecyclerView
-        android:id="@+id/autoLoadRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/search_bar"/>
 
     <RelativeLayout
         android:id="@+id/search_bar"
@@ -51,4 +48,13 @@
             android:padding="15dp"/>
     </RelativeLayout>
 
-</RelativeLayout>
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:id="@+id/easyRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_empty="@layout/view_empty"
+        app:layout_progress="@layout/view_progress"
+        app:layout_error="@layout/view_error"
+        app:scrollbars="none"/>
+
+</LinearLayout>

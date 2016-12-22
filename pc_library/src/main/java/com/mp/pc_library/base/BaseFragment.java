@@ -12,6 +12,7 @@ import com.mp.pc_library.lib_event.StartBrotherEvent;
 import com.mp.pc_library.lib_event.StartParentEvent;
 import com.mp.pc_library.net.NoHttpUtils;
 import com.mp.pc_library.utils.GsonUtil;
+import com.mp.pc_library.utils.LibConstants;
 import com.orhanobut.logger.Logger;
 import com.yolanda.nohttp.download.DownloadListener;
 import com.yolanda.nohttp.rest.OnResponseListener;
@@ -82,6 +83,17 @@ public abstract class BaseFragment extends SupportFragment {
         unbinder.unbind();
         EventBus.getDefault().unregister(this);
         super.onDestroyView();
+    }
+
+    /**
+     * Get方法获取网络数据请求（String类型），无参数
+     *
+     * @param cmd      请求路径
+     * @param what     请求标志
+     * @param listener 返回监听
+     */
+    protected void addGetRequest(String cmd, int what, OnResponseListener<String> listener) {
+        NoHttpUtils.getInstance().asyncGetStringRequest(URLHead + cmd, what, null, listener);
     }
 
     /**
@@ -164,8 +176,13 @@ public abstract class BaseFragment extends SupportFragment {
      * @return
      */
     protected String getResultCode(Response response) {
-
-        return GsonUtil.fromJson(response.get().toString(), ResponseData.class).getCode();
+        String resultCode = LibConstants.ResultKey.code_error;
+        try {
+            resultCode = GsonUtil.fromJson(response.get().toString(), ResponseData.class).getCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultCode;
     }
 
     /**
@@ -174,7 +191,13 @@ public abstract class BaseFragment extends SupportFragment {
      * @return
      */
     protected String getResultState(Response response) {
-        return GsonUtil.fromJson(response.get().toString(), ResponseData.class).getState();
+        String resultState = LibConstants.ResultKey.state_error;
+        try {
+            resultState = GsonUtil.fromJson(response.get().toString(), ResponseData.class).getState();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultState;
     }
 
     /**
@@ -184,7 +207,13 @@ public abstract class BaseFragment extends SupportFragment {
      */
     protected String getResultContentString(Response response) {
         Logger.json(GsonUtil.fromJson(response.get().toString(), ResponseData.class).getContent().toString());
-        return GsonUtil.fromJson(response.get().toString(), ResponseData.class).getContent().toString();
+        String resultContent = "";
+        try {
+            resultContent = GsonUtil.fromJson(response.get().toString(), ResponseData.class).getContent().toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultContent;
     }
 
     /**

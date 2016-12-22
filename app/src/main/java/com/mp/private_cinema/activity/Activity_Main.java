@@ -2,8 +2,8 @@ package com.mp.private_cinema.activity;
 
 import android.os.Bundle;
 
-import com.mp.private_cinema.R;
 import com.mp.pc_library.base.BaseActivity;
+import com.mp.private_cinema.R;
 import com.mp.private_cinema.fragment.Fragment_Main;
 
 import me.yokeyword.fragmentation.SupportFragment;

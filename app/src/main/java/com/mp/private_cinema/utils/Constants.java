@@ -24,7 +24,8 @@ public class Constants {
         String WELCOME = "welcome";
         String HOME_ADVERTISEMENT = "home_advertisement";
         String HOME_FILMLIST = "home_film";
-        String CINEMA_RECOMMEND = "CINEMA_RECOMMEND";
+        String CINEMA_RECOMMEND = "cinema_recommend";
+        String CINEMA_LIST = "cinema_list";
     }
 
     public interface params {

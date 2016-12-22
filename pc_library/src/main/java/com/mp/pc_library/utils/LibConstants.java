@@ -31,9 +31,16 @@ public class LibConstants {
     /**
      * URL头部
      */
-    public static final String URLHead = "http://61.52.198.195:8888/APP/";
+    public static final String URLHead = "http://61.52.193.19:8888/APP/";
 
     public interface JsonName {
+        /** 总页数 */
+        String pagetotal = "pagetotal";
+        /** 总记录数 */
+        String totlePageSize = "totlePageSize";
+    }
+
+    public interface ResultKey {
         String code = "Code";
         String content = "Content";
         String state = "State";
@@ -41,11 +48,8 @@ public class LibConstants {
         String code_error = "002";
         String code_none = "003";
         String code_timeout = "004";
-        /** 总页数 */
-        String pagetotal = "pagetotal";
-        /** 总记录数 */
-        String totlePageSize = "totlePageSize";
-
+        String state_success = "获取成功";
+        String state_error = "获取失败";
     }
 
     interface TrueOrFalse {

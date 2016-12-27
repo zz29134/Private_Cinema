@@ -102,7 +102,9 @@ public class Fragment_Home extends BaseFragment implements
                 rollPagerView.setAdapter(advertisementAdapter = new Adapter_Home_Advertisement(rollPagerView, mContext, advertisements));
 
                 hitFilm_RecyclerView = ButterKnife.findById(header, R.id.hitFilm_RecyclerView);
-                hitFilm_RecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+                LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+                layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                hitFilm_RecyclerView.setLayoutManager(layoutManager);
                 Adapter_Home_HitFilms adapter_home_hitFilms = new Adapter_Home_HitFilms(mContext, new ArrayList<Bean_Home_HitFilms>());
                 adapter_home_hitFilms.setOnItemClickListener(new Adapter_Home_HitFilms.OnItemClickListener() {
                     @Override

@@ -31,7 +31,7 @@ public class LibConstants {
     /**
      * URL头部
      */
-    public static final String URLHead = "http://61.52.193.19:8888/APP/";
+    public static final String URLHead = "http://61.52.197.244:8888/APP/";
 
     public interface JsonName {
         /** 总页数 */

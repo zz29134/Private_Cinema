@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cinema_area">
+        <item>全城</item>
+        <item>金水区</item>
+        <item>二七区</item>
+        <item>中原区</item>
+        <item>管城区</item>
+        <item>惠济区</item>
+        <item>郑东新区</item>
+        <item>高新区</item>
+    </string-array>
+
+    <string-array name="cinema_order">
+        <item>默认排序</item>
+        <item>距离最近</item>
+        <item>人气最高</item>
+        <item>评价最高</item>
+    </string-array>
+
+    <string-array name="cinema_feature">
+        <item>暂无</item>
+    </string-array>
+</resources>

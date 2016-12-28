@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <include
-        layout="@layout/film_topbar"/>
+        layout="@layout/film_top_bar"/>
 
     <com.jude.easyrecyclerview.EasyRecyclerView
         android:id="@+id/easyRecyclerView"
